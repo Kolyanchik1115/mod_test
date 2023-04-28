@@ -13,9 +13,15 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   late var isLoading = false;
+
   void toggleIsLoading() {
     isLoading = !isLoading;
     setState(() {});
+    Future.delayed(const Duration(seconds: 6)).then((_) {
+      isLoading = !isLoading;
+      setState(() {});
+
+    });
   }
 
   @override
@@ -34,16 +40,22 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          SizedBox(
-            child: Image.asset(AppImages.splashImage),
+          Expanded(
+            flex: 3,
+            child: Container(
+              alignment: Alignment.bottomCenter,
+                child: Image.asset(AppImages.splashImage)),
           ),
-          isLoading
-              ? const Center(
-                  child: SplashLoading(),
-                )
-              : SplashScreenContent(
-                  onPressed: toggleIsLoading,
-                )
+          Expanded(
+            flex: 2,
+            child: Center(
+              child: isLoading
+                  ? const SplashLoading()
+                  : SplashScreenContent(
+                      onPressed: toggleIsLoading,
+                    ),
+            ),
+          )
         ],
       ),
     );
@@ -67,6 +79,7 @@ class SplashScreenContent extends StatelessWidget {
       color: Colors.white,
     );
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Column(
           children: [
