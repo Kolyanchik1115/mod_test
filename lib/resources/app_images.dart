@@ -31,4 +31,5 @@ class AppImages {
 
   static const String splashImage = '$_path2/splash_image.png';
   static const String splashLoading = '$_path2/splash_loading.png';
+  static const String allWorlds = '$_path2/all_worlds.png';
 }

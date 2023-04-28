@@ -4,14 +4,16 @@ import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/pages/widgets/splash_widget.dart';
 import 'package:mod_test/resources/app_images.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+class SplashPage extends StatefulWidget {
+  static const routeName = '/';
+
+  const SplashPage({Key? key}) : super(key: key);
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashPageState extends State<SplashPage> {
   late var isLoading = false;
   void toggleIsLoading() {
     isLoading = !isLoading;
