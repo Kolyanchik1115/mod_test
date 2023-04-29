@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:mod_test/pages/home/home_page.dart';
 
 import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/pages/widgets/splash_widget.dart';
+import 'package:mod_test/resources/addmob_ids.dart';
 import 'package:mod_test/resources/app_images.dart';
 
 class SplashPage extends StatefulWidget {
@@ -14,39 +19,107 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  late var isLoading = false;
-  void toggleIsLoading() {
+  var isLoading = false;
+  InterstitialAd? _interstitialAd;
+
+  void _onPressed() {
+    if (isLoading) return;
+    _createInterstitialAd();
+    _toggleIsLoading();
+    _periodicCheckAdToShow();
+  }
+
+  void _toggleIsLoading() {
     isLoading = !isLoading;
     setState(() {});
+    Future.delayed(const Duration(seconds: 6)).then((_) {
+      isLoading = !isLoading;
+      setState(() {});
+    });
+  }
+
+  void _createInterstitialAd() {
+    InterstitialAd.load(
+      request: const AdRequest(),
+      adUnitId: AdMobIds.androidInterstitialAdUnitId,
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) => _interstitialAd = ad,
+        onAdFailedToLoad: (LoadAdError error) => _interstitialAd = null,
+      ),
+    );
+  }
+
+  void _periodicCheckAdToShow() {
+    int count = 0;
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (count < 6 && isLoading) {
+        _showInterstitialAd();
+        count++;
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
+  void _showInterstitialAd() {
+    if (_interstitialAd != null) {
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          _createInterstitialAd();
+          Navigator.of(context).pushReplacementNamed(HomePage.routeName);
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          ad.dispose();
+          _createInterstitialAd();
+        },
+      );
+      _interstitialAd!.show();
+      _interstitialAd = null;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _createInterstitialAd();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color.fromRGBO(189, 0, 255, 1),
-            Color.fromRGBO(71, 0, 162, 1)
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromRGBO(189, 0, 255, 1),
+              Color.fromRGBO(71, 0, 162, 1)
+            ],
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              flex: 3,
+              child: Container(
+                  alignment: Alignment.bottomCenter,
+                  child: Image.asset(AppImages.splashImage)),
+            ),
+            Expanded(
+              flex: 2,
+              child: Center(
+                child: isLoading
+                    ? const SplashLoading()
+                    : SplashScreenContent(
+                        onPressed: _onPressed,
+                      ),
+              ),
+            )
           ],
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SizedBox(
-            child: Image.asset(AppImages.splashImage),
-          ),
-          isLoading
-              ? const Center(
-                  child: SplashLoading(),
-                )
-              : SplashScreenContent(
-                  onPressed: toggleIsLoading,
-                )
-        ],
       ),
     );
   }
@@ -69,6 +142,7 @@ class SplashScreenContent extends StatelessWidget {
       color: Colors.white,
     );
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Column(
           children: [

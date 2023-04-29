@@ -33,7 +33,7 @@ class IconContainer extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         SizedBox(
-          height: 30,
+          height: 50,
           child:
               Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
         ),

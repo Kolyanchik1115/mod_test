@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flurry_sdk/flurry.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mod_test/pages/home/widgets/icon_container.dart';
+import 'package:mod_test/pages/install/install_page.dart';
 import 'package:mod_test/pages/instruction/instruction_page.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
+import 'package:mod_test/pages/widgets/rate_us.dart';
 import 'package:mod_test/resources/app_icons.dart';
 import 'package:mod_test/resources/app_images.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class HomePage extends StatelessWidget {
   static const routeName = '/homepage';
@@ -13,6 +17,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -37,21 +42,38 @@ class HomePage extends StatelessWidget {
                 text: 'Instruction',
               ),
               IconContainer(
-                onPressed: () {},
-                svg: SvgPicture.asset(AppIcons.instruction),
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    builder: (_) => const RatingDialog(),
+                  );
+                },
+                svg: SvgPicture.asset(AppIcons.rateUs),
                 text: 'Rate us',
               ),
               IconContainer(
-                onPressed: () {},
-                svg: SvgPicture.asset(AppIcons.instruction),
+                onPressed: () async {
+                  const url = 'https://www.iubenda.com/privacy-policy/48055999';
+                  await launchUrlString(
+                    url,
+                    mode: LaunchMode.inAppWebView,
+                  );
+                },
+                svg: SvgPicture.asset(AppIcons.privacy),
                 text: 'Privacy\n policy',
               ),
             ],
           ),
-          const Expanded(
+          Expanded(
             child: AppButtonWidget(
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  InstallPage.routeName,
+                  (route) => true,
+                );
+              },
               color: Colors.deepPurpleAccent,
-              title: Text(
+              title: const Text(
                 'Start',
                 style: TextStyle(
                   color: Colors.white,

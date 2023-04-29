@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:mod_test/pages/home/home_page.dart';
+import 'package:flutter_flurry_sdk/flurry.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:mod_test/pages/splash/splash_page.dart';
 import 'package:mod_test/routes/app_routes.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await MobileAds.instance.initialize();
+  Flurry.builder
+      .withCrashReporting(true)
+      .withLogEnabled(true)
+      .withLogLevel(LogLevel.debug)
+      .withReportLocation(true)
+      .build(androidAPIKey: 'Z4CV54XKQFVZ7RYTQ79C');
   runApp(const MyApp());
 }
 
@@ -16,8 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: const Scaffold(body: SplashScreen()),
-      home: const HomePage(),
+      home: const SplashPage(),
       onGenerateRoute: AppRouter.generateRoute,
     );
   }

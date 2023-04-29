@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mod_test/pages/home/home_page.dart';
+import 'package:mod_test/pages/install/install_page.dart';
 import 'package:mod_test/pages/instruction/instruction_page.dart';
 import 'package:mod_test/pages/splash/splash_page.dart';
 
@@ -19,7 +20,9 @@ class AppRouter {
       case InstructionPage.routeName:
         builder = (_) => const InstructionPage();
         break;
-
+      case InstallPage.routeName:
+        builder = (_) => const InstallPage();
+        break;
       default:
         throw Exception('Invalid route: ${settings.name}');
     }
