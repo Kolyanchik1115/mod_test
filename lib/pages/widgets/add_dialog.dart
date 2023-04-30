@@ -16,6 +16,7 @@ class RewardedAdButton extends StatefulWidget {
 
 class _RewardedAdButtonState extends State<RewardedAdButton> {
   RewardedAd? rewardedAd;
+  Timer? _timer;
   var _isLoading = false;
 
   @override
@@ -24,41 +25,47 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     _createRewardedAd();
   }
 
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
   void _createRewardedAd() {
-    RewardedAd.load(
-      request: const AdRequest(),
-      adUnitId: AdModService.rewardedAdUnitId!,
-      rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) => setState(() => rewardedAd = ad),
-        onAdFailedToLoad: (LoadAdError error) =>
-            setState(() => rewardedAd = null),
-      ),
-    );
+    if (rewardedAd == null) {
+      RewardedAd.load(
+        request: const AdRequest(),
+        adUnitId: AdModService.rewardedAdUnitId!,
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (ad) => setState(() => rewardedAd = ad),
+          onAdFailedToLoad: (LoadAdError error) =>
+              setState(() => rewardedAd = null),
+        ),
+      );
+    }
   }
 
   void _onPressed() {
     if (_isLoading) return;
-    _toggleIsLoading();
+    if (rewardedAd == null) {
+      _createRewardedAd();
+    }
     _periodicCheckAdToShow();
   }
 
-  void _toggleIsLoading() {
-    _isLoading = !_isLoading;
-    setState(() {});
-    Future.delayed(const Duration(seconds: 6)).then((_) {
-      _isLoading = !_isLoading;
-      setState(() {});
-    });
-  }
-
   void _periodicCheckAdToShow() {
+    _isLoading = true;
+    setState(() {});
     int count = 0;
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (count < 3 && _isLoading) {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (count < 6 && _isLoading) {
         _showRewardedAd();
         count++;
       } else {
-        timer.cancel();
+        _timer?.cancel();
+        _isLoading = false;
+        setState(() {});
       }
     });
   }
@@ -67,18 +74,39 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     if (rewardedAd != null) {
       rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (ad) {
+          // Очень важно: чтобы переходило в это место при закрытии рекламы,
+          // ни в коем случае нельзя диспосить рекламу при получении награды
+          // в методе onUserEarnedReward при ее показе
           ad.dispose();
+
           _createRewardedAd();
+          Navigator.of(context, rootNavigator: true).pop();
+          print('Rewarded ad dismissed');
         },
+        // onAdWillDismissFullScreenContent: (ad) {
+        //   ad.dispose();
+        //   _createRewardedAd();
+        //   print('Rewarded ad dismissed');
+        // },
         onAdFailedToShowFullScreenContent: (ad, error) {
           ad.dispose();
           _createRewardedAd();
+          print('Failed to show rewarded ad: $error');
         },
       );
+
       rewardedAd!.show(
-        onUserEarnedReward: (AdWithoutView ad, RewardItem reward) =>
-            _afterWatchingRewardedAd(),
+        onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+          // ad.dispose();
+
+          _createRewardedAd();
+
+          // _afterWatchingRewardedAd();
+        },
       );
+      _isLoading = false;
+      setState(() {});
+      _timer?.cancel();
       rewardedAd = null;
     }
   }
