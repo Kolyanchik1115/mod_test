@@ -19,23 +19,14 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  Timer? _timer;
   var isLoading = false;
   InterstitialAd? _interstitialAd;
 
   void _onPressed() {
     if (isLoading) return;
     _createInterstitialAd();
-    _toggleIsLoading();
     _periodicCheckAdToShow();
-  }
-
-  void _toggleIsLoading() {
-    isLoading = !isLoading;
-    setState(() {});
-    Future.delayed(const Duration(seconds: 6)).then((_) {
-      isLoading = !isLoading;
-      setState(() {});
-    });
   }
 
   void _createInterstitialAd() {
@@ -50,13 +41,17 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void _periodicCheckAdToShow() {
+    isLoading = true;
+    setState(() {});
     int count = 0;
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (count < 6 && isLoading) {
         _showInterstitialAd();
         count++;
       } else {
-        timer.cancel();
+        _timer?.cancel();
+        isLoading = false;
       }
     });
   }
@@ -66,8 +61,10 @@ class _SplashPageState extends State<SplashPage> {
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (ad) {
           ad.dispose();
-          _createInterstitialAd();
+          // _createInterstitialAd();
+          _timer?.cancel();
           Navigator.of(context).pushReplacementNamed(HomePage.routeName);
+          isLoading = false;
         },
         onAdFailedToShowFullScreenContent: (ad, error) {
           ad.dispose();
@@ -83,6 +80,12 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     _createInterstitialAd();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
