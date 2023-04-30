@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:mod_test/pages/widgets/add_dialog.dart';
+import 'package:mod_test/pages/install/widgets/ad_dialog.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
 
 
@@ -40,7 +40,7 @@ class InstallPage extends StatelessWidget {
             onPressed: () {
               showDialog(
                 context: context,
-                builder: (_) => const RewardedAdButton(),
+                builder: (_) => const AdDialog(),
               );
             },
             color: Colors.deepPurple,
