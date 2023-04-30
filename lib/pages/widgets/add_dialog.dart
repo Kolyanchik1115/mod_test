@@ -33,24 +33,19 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
   }
 
   void _createRewardedAd() {
-    if (rewardedAd == null) {
-      RewardedAd.load(
-        request: const AdRequest(),
-        adUnitId: AdModService.rewardedAdUnitId!,
-        rewardedAdLoadCallback: RewardedAdLoadCallback(
-          onAdLoaded: (ad) => setState(() => rewardedAd = ad),
-          onAdFailedToLoad: (LoadAdError error) =>
-              setState(() => rewardedAd = null),
-        ),
-      );
-    }
+    RewardedAd.load(
+      request: const AdRequest(),
+      adUnitId: AdModService.rewardedAdUnitId!,
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) => setState(() => rewardedAd = ad),
+        onAdFailedToLoad: (LoadAdError error) =>
+            setState(() => rewardedAd = null),
+      ),
+    );
   }
 
   void _onPressed() {
     if (_isLoading) return;
-    if (rewardedAd == null) {
-      _createRewardedAd();
-    }
     _periodicCheckAdToShow();
   }
 
@@ -79,16 +74,10 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
           // ни в коем случае нельзя диспосить рекламу при получении награды
           // в методе onUserEarnedReward при ее показе
           ad.dispose();
-
           _createRewardedAd();
+          _afterDismissingRewardedAd();
           Navigator.of(context, rootNavigator: true).pop();
-          print('Rewarded ad dismissed');
         },
-        // onAdWillDismissFullScreenContent: (ad) {
-        //   ad.dispose();
-        //   _createRewardedAd();
-        //   print('Rewarded ad dismissed');
-        // },
         onAdFailedToShowFullScreenContent: (ad, error) {
           ad.dispose();
           _createRewardedAd();
@@ -101,8 +90,7 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
           // ad.dispose();
 
           _createRewardedAd();
-
-          // _afterWatchingRewardedAd();
+          _afterWatchingRewardedAd();
         },
       );
       _isLoading = false;
@@ -112,6 +100,10 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     }
   }
 
+  // Сдесь должна быть реализация перехода в Майнкрафт
+  Future<void> _afterDismissingRewardedAd() async {}
+
+  // Сдесь должна быть реализация скачивания мода и переброс его в майнкрафт
   Future<void> _afterWatchingRewardedAd() async {
     bool isInstalled =
         await DeviceApps.isAppInstalled('com.mojang.minecraftpe');
@@ -126,10 +118,10 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
       const fileName = 'spider.mcaddon';
       final file = File('${getAddonDirectory!.path}/$fileName');
       await file.writeAsBytes(bytes);
-     //все что выше работает, скачивает по тому пути выше
+      //все что выше работает, скачивает по тому пути выше
 
-     // -> copyAddonToMinecraftDirectory функция копирования мода в папку майна  и она не работает 
-     await copyAddonToMinecraftDirectory(fileName);
+      // -> copyAddonToMinecraftDirectory функция копирования мода в папку майна  и она не работает
+      await copyAddonToMinecraftDirectory(fileName);
     } else {
       const snackBar = SnackBar(
         duration: Duration(seconds: 2),
