@@ -10,7 +10,7 @@ class ReviewService {
   static bool _reviewed = false;
   static late int count;
 
-  static bool get needToShowRateUs => count == 0;
+  static bool get needToShowRateUs => count == 2;
 
   static void toggle() {
     _reviewed = !_reviewed;
