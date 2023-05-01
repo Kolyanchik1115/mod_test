@@ -4,12 +4,10 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-
    <application
         android:label="mod_test"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -40,10 +38,6 @@
            android:name="com.google.android.gms.ads.APPLICATION_ID"
            android:value="ca-app-pub-3940256099942544~3419835294"/>
     </application>
-    <queries>
-        <package android:name="net.pulsesecure.pulsesecure" /> 
-        <package android:name="com.mojang.minecraftpe"/>
-    </queries>
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW"/>

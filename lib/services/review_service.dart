@@ -1,10 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReviewService {
-  ReviewService._() {
-    // onLogin();
-  }
-
   static const String ratingField = 'user_rating';
   static const String countField = 'visit_count';
   static bool _reviewed = false;

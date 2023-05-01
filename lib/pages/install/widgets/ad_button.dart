@@ -87,8 +87,6 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
 
       rewardedAd!.show(
         onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-          // ad.dispose();
-
           _createRewardedAd();
           _afterWatchingRewardedAd();
         },
@@ -101,7 +99,9 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
   }
 
   // Сдесь должна быть реализация перехода в Майнкрафт
-  Future<void> _afterDismissingRewardedAd() async {}
+  Future<void> _afterDismissingRewardedAd() async {
+    
+  }
 
   // Сдесь должна быть реализация скачивания мода и переброс его в майнкрафт
   Future<void> _afterWatchingRewardedAd() async {
@@ -186,18 +186,6 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
           height: 53,
           width: 230,
           onPressed: _isLoading ? null : _onPressed,
-        ),
-        Positioned(
-          right: 0,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: Colors.deepPurple,
-            ),
-            width: 21,
-            height: 21,
-            child: const FittedBox(child: Text('AD')),
-          ),
         ),
       ],
     );

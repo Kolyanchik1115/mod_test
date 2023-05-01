@@ -61,7 +61,6 @@ class _SplashPageState extends State<SplashPage> {
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (ad) {
           ad.dispose();
-          // _createInterstitialAd();
           _timer?.cancel();
           Navigator.of(context).pushReplacementNamed(HomePage.routeName);
           isLoading = false;

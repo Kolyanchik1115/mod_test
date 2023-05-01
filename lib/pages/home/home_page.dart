@@ -26,11 +26,7 @@ class HomePage extends StatelessWidget {
       Future.delayed(const Duration(seconds: 1)).then((value) {
         if (ReviewService.needToShowRateUs) {
           {
-            showDialog(
-              context: context,
-              // builder: (_) => Text(ReviewService.count.toString())
-              builder: (_) => const RatingDialog(),
-            );
+            showDialog(context: context, builder: (_) => const RatingDialog());
           }
         }
       });

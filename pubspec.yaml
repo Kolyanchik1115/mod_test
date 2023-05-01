@@ -6,7 +6,7 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.6 <3.0.0'
+  sdk: ">=2.19.6 <3.0.0"
 
 dependencies:
   flutter:
@@ -18,17 +18,15 @@ dependencies:
   url_launcher: ^6.1.10
   path_provider: ^2.0.14
   device_apps: ^2.2.0
-  open_file: ^3.3.1
   google_mobile_ads: ^3.0.0
-  external_app_launcher: ^3.1.0
   flutter_flurry_sdk: ^3.2.0
   http: ^0.13.5
-  android_intent_plus: ^3.1.9
-  flutter_web_browser: ^0.17.1
-  path: ^1.8.2
-  permission_handler: ^10.2.0
+  flutter_launcher_icons: ^0.13.1
   
-  
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/logo.jpg"
 
 dev_dependencies:
   flutter_test:
@@ -44,4 +42,3 @@ flutter:
     - assets/images/
     - assets/instructions_image 2/
     - assets/splash/
-    - assets/mod/
