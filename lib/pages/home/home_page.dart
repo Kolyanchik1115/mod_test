@@ -24,12 +24,12 @@ class HomePage extends StatelessWidget {
   void _checkLoginCountAndShowRatingDialog(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 1)).then((value) {
-        if (ReviewService.count > 1) {
+        if (ReviewService.needToShowRateUs) {
           {
             showDialog(
               context: context,
-              builder: (_) => Text(ReviewService.count.toString())
-              // builder: (_) => const RatingDialog(),
+              // builder: (_) => Text(ReviewService.count.toString())
+              builder: (_) => const RatingDialog(),
             );
           }
         }
