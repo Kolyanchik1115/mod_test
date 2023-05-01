@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_flurry_sdk/flurry.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mod_test/pages/home/widgets/icon_container.dart';
 import 'package:mod_test/pages/install/install_page.dart';
@@ -8,16 +7,39 @@ import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/pages/widgets/rate_us.dart';
 import 'package:mod_test/resources/app_icons.dart';
 import 'package:mod_test/resources/app_images.dart';
+import 'package:mod_test/services/review_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class HomePage extends StatelessWidget {
   static const routeName = '/homepage';
 
-  const HomePage({super.key});
+  HomePage({super.key}) {
+    _setup();
+  }
+
+  void _setup() async {
+    await ReviewService.onLogin();
+  }
+
+  void _checkLoginCountAndShowRatingDialog(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 1)).then((value) {
+        if (ReviewService.count > 1) {
+          {
+            showDialog(
+              context: context,
+              builder: (_) => Text(ReviewService.count.toString())
+              // builder: (_) => const RatingDialog(),
+            );
+          }
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
+    _checkLoginCountAndShowRatingDialog(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

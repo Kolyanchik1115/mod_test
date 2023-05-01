@@ -1,33 +1,34 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReviewService {
-  ReviewService._();
+  ReviewService._() {
+    // onLogin();
+  }
+
   static const String ratingField = 'user_rating';
   static const String countField = 'visit_count';
   static bool _reviewed = false;
-  static bool _isSecond = false;
+  static late int count;
+
+  static bool get needToShowRateUs => count == 0;
 
   static void toggle() {
     _reviewed = !_reviewed;
   }
 
-  static void counter() {
-    _isSecond = !_isSecond;
+  static Future<int?> _getCount(String fieldName) async {
+    final prefs = await _sharedPrefs;
+    return prefs.getInt(fieldName);
   }
 
-  static Future<bool> get ifSecond async {
-    final prefs = await _sharedPrefs;
-
-    final field = prefs.getBool(countField);
-    if (field == null) {
-      return false;
-    }
-    return field;
+  static Future<void> onLogin() async {
+    count = await _getCount(countField) ?? 1;
+    if (count > 2) return;
+    _setCount(fieldName: countField, count: count + 1);
   }
 
   static Future<bool> get ifReviewed async {
-    final prefs = await _sharedPrefs;
-    final field = prefs.getInt(ratingField);
+    final field = await _getCount(ratingField);
     if (field != null) {
       return true;
     }
@@ -39,14 +40,15 @@ class ReviewService {
   }
 
   static Future<void> setRating(int rating) async {
-    final prefs = await _sharedPrefs;
-    await prefs.setInt(ratingField, rating);
+    await _setCount(fieldName: ratingField, count: rating);
     toggle();
   }
 
-  static Future<void> setCount(int count) async {
+  static Future<void> _setCount({
+    required String fieldName,
+    required int count,
+  }) async {
     final prefs = await _sharedPrefs;
     await prefs.setInt(countField, count);
-    counter();
   }
 }
