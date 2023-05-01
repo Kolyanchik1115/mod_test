@@ -12,7 +12,7 @@ class AdModService {
     if (Platform.isAndroid) {
       return AdMobIds.androidRewardedAdUnitId;
     } else {
-      return '';
+      return AdMobIds.iosRewardedAdUnitId;
     }
   }
 
@@ -20,7 +20,7 @@ class AdModService {
     if (Platform.isAndroid) {
       return AdMobIds.androidInterstitialAdUnitId;
     } else {
-      return '';
+      return AdMobIds.iosInterstitialAdUnitId;
     }
   }
 
