@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_flurry_sdk/flurry.dart';
 import 'package:mod_test/pages/install/widgets/ad_dialog.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
 
@@ -38,6 +39,7 @@ class InstallPage extends StatelessWidget {
           const SizedBox(height: 20),
           AppButtonWidget(
             onPressed: () {
+              Flurry.logEvent('Pressed INSTALL button');
               showDialog(
                 context: context,
                 builder: (_) => const AdDialog(),
