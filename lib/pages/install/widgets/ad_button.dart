@@ -21,6 +21,7 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
   RewardedAd? rewardedAd;
   Timer? _timer;
   var _isLoading = false;
+  var filePath = '';
 
   @override
   void initState() {
@@ -100,9 +101,10 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     }
   }
 
-  Future<void> _afterDismissingRewardedAd() async {} //
+  Future<void> _afterDismissingRewardedAd() async {
+    await OpenFile.open(filePath);
+  }
 
-  // Сдесь должна быть реализация скачивания мода и переброс его в майнкрафт
   Future<void> _afterWatchingRewardedAd() async {
     bool isInstalled =
         await DeviceApps.isAppInstalled('com.mojang.minecraftpe');
@@ -115,7 +117,7 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
       const fileName = 'spider.mcaddon';
       final file = File('${getAddonDirectory!.path}/$fileName');
       final ready = await file.writeAsBytes(bytes);
-      await OpenFile.open(ready.path);
+      filePath = ready.path;
     } else {
       const snackBar = SnackBar(
         duration: Duration(seconds: 2),
