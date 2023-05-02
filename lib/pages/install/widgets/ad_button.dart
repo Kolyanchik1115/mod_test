@@ -54,7 +54,6 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
   Future<void> _onWatch() async {
     bool isInstalled =
         await DeviceApps.isAppInstalled(AppConstantsString.minecraftPath);
-
     if (isInstalled) {
       final response = await http.get(Uri.parse(AppConstantsString.fileUrl));
       final getAddonDirectory = await getExternalStorageDirectory();
@@ -67,10 +66,10 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     } else {
       const snackBar = SnackBar(
         duration: Duration(seconds: 2),
-        backgroundColor: AppColors.white,
+        backgroundColor: AppColors.icon,
         content: Text(
           'Minecraft не установлен на вашем телефоне',
-          style: TextStyle(fontSize: 17),
+          style: AppText.txt1,
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -84,7 +83,7 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
 
   @override
   Widget build(BuildContext context) {
-    final color = _isLoading ? Colors.grey : Colors.deepPurpleAccent;
+    final color = _isLoading ? Colors.grey : AppColors.icon;
     return Stack(
       children: [
         AppButtonWidget(

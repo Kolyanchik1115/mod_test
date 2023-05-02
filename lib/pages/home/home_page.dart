@@ -98,7 +98,7 @@ class HomePage extends StatelessWidget {
               },
               color: AppColors.icon,
               title: const Text(
-                'STRART',
+                'START',
                 style: AppText.txt1,
               ),
               height: 53,
