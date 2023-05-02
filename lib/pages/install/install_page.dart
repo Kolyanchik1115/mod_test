@@ -37,23 +37,7 @@ class InstallPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          AppButtonWidget(
-            onPressed: () {
-              Flurry.logEvent('Pressed INSTALL button');
-              showDialog(
-                context: context,
-                builder: (_) => const AdDialog(),
-              );
-            },
-            color: Colors.deepPurple,
-            title: const Text(
-              'INSTALL',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            height: 60,
-            width: 250,
-          ),
+          buildInstallButtonWidget(context),
           const SizedBox(
             height: 25,
           ),
@@ -134,8 +118,29 @@ class InstallPage extends StatelessWidget {
               ],
             ),
           ),
+          buildInstallButtonWidget(context),
         ],
       ),
     );
+  }
+
+  AppButtonWidget buildInstallButtonWidget(BuildContext context) {
+    return AppButtonWidget(
+          onPressed: () {
+            Flurry.logEvent('Pressed INSTALL button');
+            showDialog(
+              context: context,
+              builder: (_) => const AdDialog(),
+            );
+          },
+          color: Colors.deepPurple,
+          title: const Text(
+            'INSTALL',
+            style:
+                TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          height: 60,
+          width: 250,
+        );
   }
 }

@@ -90,7 +90,7 @@ class HomePage extends StatelessWidget {
                   (route) => true,
                 );
               },
-              color: Colors.deepPurpleAccent,
+              color: Colors.deepPurple,
               title: const Text(
                 'Start',
                 style: TextStyle(

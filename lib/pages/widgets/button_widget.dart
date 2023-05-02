@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'shadow_container.dart';
+
 class AppButtonWidget extends StatelessWidget {
   final Color? shadowColor;
   final Color color;
@@ -21,20 +23,11 @@ class AppButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        width: width,
+      child: ShadowContainer(
+        width: width ?? double.infinity,
         height: height,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(height / 2),
-          boxShadow: [
-            BoxShadow(
-              color: shadowColor ?? Colors.transparent,
-              offset: const Offset(0, 4),
-              blurRadius: 0,
-            ),
-          ],
-        ),
+        color: color,
+        shadowColor: shadowColor ?? color,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: color,
@@ -45,8 +38,8 @@ class AppButtonWidget extends StatelessWidget {
           ),
           onPressed: onPressed,
           child: title,
-        ),
-      ),
+        ),),
     );
   }
 }
+

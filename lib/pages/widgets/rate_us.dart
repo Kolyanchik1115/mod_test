@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mod_test/pages/widgets/button_widget.dart';
+import 'package:mod_test/pages/widgets/dialog_container.dart';
 import 'package:mod_test/resources/app_consts.dart';
 import 'package:mod_test/resources/app_icons.dart';
 import 'package:mod_test/services/review_service.dart';
@@ -18,34 +20,18 @@ class _RatingDialogState extends State<RatingDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: GestureDetector(
-                onTap: () {
-                  ReviewService.toggle();
-                  Navigator.of(context).pop();
-                },
-                child: SvgPicture.asset(
-                  AppIcons.close,
-                ),
-              ),
-            ),
-            const Text(
-              'Please rate the app.\n Your feedback is very\n important to us',
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return DialogContainer(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            'Please rate the app.\n Your feedback is very\n important to us',
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
                 5,
                 (index) => GestureDetector(
@@ -68,48 +54,34 @@ class _RatingDialogState extends State<RatingDialog> {
                 ),
               ),
             ),
-            const SizedBox(height: 20.0),
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
-                  shape: MaterialStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(50),
-                      ),
-                    ),
-                  ),
-                ),
-                onPressed: () async {
-                  Navigator.pop(context);
-                  if (_currentRating >= 4) {
-                    const url = AppConstantsString.linkToPlayMarket;
-                    if (await canLaunchUrlString(url)) {
-                      await launchUrlString(
-                        url,
-                        mode: LaunchMode.externalApplication,
-                      );
-                    } else {
-                      throw 'Could not launch $url';
-                    }
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (context) => const FeedbackAlert(),
-                    );
-                  }
-                  ReviewService.setRating(_currentRating);
-                },
-                child: Text(
-                  rateButtonText,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+          AppButtonWidget(
+            color: Colors.deepPurple,
+            title: Text(rateButtonText),
+            height: 55,
+            width: 230,
+            onPressed: () async {
+              Navigator.pop(context);
+              if (_currentRating >= 4) {
+                const url = AppConstantsString.linkToPlayMarket;
+                if (await canLaunchUrlString(url)) {
+                  await launchUrlString(
+                    url,
+                    mode: LaunchMode.externalApplication,
+                  );
+                } else {
+                  throw 'Could not launch $url';
+                }
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) => const FeedbackAlert(),
+                );
+              }
+              ReviewService.setRating(_currentRating);
+            },
+          ),
+        ],
       ),
     );
   }
