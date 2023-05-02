@@ -9,6 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/services/admob_service.dart';
 
+import 'package:open_file/open_file.dart';
+
 class RewardedAdButton extends StatefulWidget {
   const RewardedAdButton({Key? key}) : super(key: key);
 
@@ -20,6 +22,7 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
   RewardedAd? rewardedAd;
   Timer? _timer;
   var _isLoading = false;
+  var filePath = '';
 
   @override
   void initState() {
@@ -101,12 +104,10 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     }
   }
 
-  // Сдесь должна быть реализация перехода в Майнкрафт
   Future<void> _afterDismissingRewardedAd() async {
-    
+    await OpenFile.open(filePath);
   }
 
-  // Сдесь должна быть реализация скачивания мода и переброс его в майнкрафт
   Future<void> _afterWatchingRewardedAd() async {
     bool isInstalled =
         await DeviceApps.isAppInstalled('com.mojang.minecraftpe');
@@ -114,17 +115,12 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
       const url =
           'https://www.dropbox.com/s/5wc31t4yio8j2f8/spider.mcaddon?dl=1';
       final response = await http.get(Uri.parse(url));
-
       final getAddonDirectory = await getExternalStorageDirectory();
-
       final bytes = response.bodyBytes;
       const fileName = 'spider.mcaddon';
       final file = File('${getAddonDirectory!.path}/$fileName');
-      await file.writeAsBytes(bytes);
-      //все что выше работает, скачивает по тому пути выше
-
-      // -> copyAddonToMinecraftDirectory функция копирования мода в папку майна  и она не работает
-      await copyAddonToMinecraftDirectory(fileName);
+      final ready = await file.writeAsBytes(bytes);
+      filePath = ready.path;
     } else {
       const snackBar = SnackBar(
         duration: Duration(seconds: 2),
@@ -135,24 +131,6 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
-  }
-
-  Future<void> copyAddonToMinecraftDirectory(String fileName) async {
-    try {
-      const minecraftAddonsPath =
-          '/storage/emulated/0/Android/data/com.mojang.minecraftpe/files/games/com.mojang';
-      final getAddonDirectory =
-          '/storage/emulated/0/Android/data/com.mcpe_shader.mod_test/files';
-      final addonFile = File('$getAddonDirectory/$fileName');
-      if (await addonFile.exists()) {
-        await addonFile.copy(minecraftAddonsPath);
-        print('Addon copied successfully!');
-      } else {
-        print('Addon file not found!');
-      }
-    } catch (e) {
-      print('Error copying addon to Minecraft directory: $e');
     }
   }
 
