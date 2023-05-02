@@ -7,10 +7,17 @@ class AdDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DialogContainer(
-      description:
-          Text('To install a mod in\nMinecraft, you need\nto watch a video ad'),
-      button: RewardedAdButton(),
+    return DialogContainer(
+      child:
+          Column(
+
+            children: const [
+              Text('To install a mod in\nMinecraft, you need\nto watch a video ad'),
+              SizedBox(height: 36),
+              RewardedAdButton(),
+            ],
+          ),
+
     );
   }
 }
