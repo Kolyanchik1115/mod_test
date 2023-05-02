@@ -3,12 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mod_test/pages/home/home_page.dart';
+import 'package:mod_test/pages/splash/widgets/splash_screen_content.dart';
 
 import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/pages/widgets/splash_widget.dart';
 import 'package:mod_test/resources/addmob_ids.dart';
 import 'package:mod_test/resources/app_images.dart';
-import 'package:mod_test/resources/utils/colors.dart';
+import 'package:mod_test/services/admob_service.dart';
 
 class SplashPage extends StatefulWidget {
   static const routeName = '/';
@@ -20,72 +21,30 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  Timer? _timer;
-  var isLoading = false;
-  InterstitialAd? _interstitialAd;
+  late bool _isLoading;
 
   void _onPressed() {
-    if (isLoading) return;
-    _createInterstitialAd();
-    _periodicCheckAdToShow();
-  }
+    if (_isLoading) return;
+    _isLoading = true;
 
-  void _createInterstitialAd() {
-    InterstitialAd.load(
-      request: const AdRequest(),
-      adUnitId: AdMobIds.androidInterstitialAdUnitId,
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) => _interstitialAd = ad,
-        onAdFailedToLoad: (LoadAdError error) => _interstitialAd = null,
-      ),
+    AdModService.createInterstitialAd();
+    AdModService.periodicCheckAdToShow(
+      setState: setState,
+      isLoading: _isLoading,
+      showAd: () => AdModService.showInterstitialAd(_onAdClose, setState),
     );
   }
 
-  void _periodicCheckAdToShow() {
-    isLoading = true;
-    setState(() {});
-    int count = 0;
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (count < 6 && isLoading) {
-        _showInterstitialAd();
-        count++;
-      } else {
-        _timer?.cancel();
-        isLoading = false;
-      }
-    });
-  }
-
-  void _showInterstitialAd() {
-    if (_interstitialAd != null) {
-      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-        onAdDismissedFullScreenContent: (ad) {
-          ad.dispose();
-          _timer?.cancel();
-          Navigator.of(context).pushReplacementNamed(HomePage.routeName);
-          isLoading = false;
-        },
-        onAdFailedToShowFullScreenContent: (ad, error) {
-          ad.dispose();
-          _createInterstitialAd();
-        },
-      );
-      _interstitialAd!.show();
-      _interstitialAd = null;
-    }
+  void _onAdClose() {
+    _isLoading = false;
+    Navigator.of(context).pushReplacementNamed(HomePage.routeName);
   }
 
   @override
   void initState() {
     super.initState();
-    _createInterstitialAd();
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
+    _isLoading = false;
+    AdModService.createInterstitialAd();
   }
 
   @override
@@ -97,8 +56,8 @@ class _SplashPageState extends State<SplashPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-             AppColors.splash,
-              AppColors.icon
+              Color.fromRGBO(189, 0, 255, 1),
+              Color.fromRGBO(71, 0, 162, 1)
             ],
           ),
         ),
@@ -114,7 +73,7 @@ class _SplashPageState extends State<SplashPage> {
             Expanded(
               flex: 2,
               child: Center(
-                child: isLoading
+                child: _isLoading
                     ? const SplashLoading()
                     : SplashScreenContent(
                         onPressed: _onPressed,
@@ -124,62 +83,6 @@ class _SplashPageState extends State<SplashPage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class SplashScreenContent extends StatelessWidget {
-  final void Function() onPressed;
-
-  const SplashScreenContent({
-    super.key,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    const textStyle = TextStyle(
-      letterSpacing: 0.16,
-      fontWeight: FontWeight.w600,
-      fontSize: 16,
-      color: AppColors.white,
-    );
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(
-          children: [
-            const Text(
-              'Если вы согласны с',
-              style: textStyle,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                    onTap: () {},
-                    child: Text('Privacy Policy',
-                        style: textStyle.copyWith(
-                            decoration: TextDecoration.underline))),
-                const Text(' нажмите старт', style: textStyle),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(height: 25),
-        AppButtonWidget(
-          shadowColor: AppColors.white,
-          color: AppColors.white,
-          title: const Text('START',
-              style: TextStyle(
-                  color: AppColors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700)),
-          height: 58,
-          width: 184,
-          onPressed: onPressed,
-        ),
-      ],
     );
   }
 }

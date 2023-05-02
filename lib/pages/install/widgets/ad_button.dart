@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_flurry_sdk/flurry.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
 import 'package:mod_test/resources/utils/colors.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,89 +18,33 @@ class RewardedAdButton extends StatefulWidget {
 }
 
 class _RewardedAdButtonState extends State<RewardedAdButton> {
-  RewardedAd? rewardedAd;
-  Timer? _timer;
-  var _isLoading = false;
+  late bool _isLoading;
   var filePath = '';
 
   @override
   void initState() {
     super.initState();
-    _createRewardedAd();
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
-
-  void _createRewardedAd() {
-    RewardedAd.load(
-      request: const AdRequest(),
-      adUnitId: AdModService.rewardedAdUnitId!,
-      rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) => setState(() => rewardedAd = ad),
-        onAdFailedToLoad: (LoadAdError error) =>
-            setState(() => rewardedAd = null),
-      ),
-    );
+    _isLoading = false;
+    AdModService.createRewardedAd();
   }
 
   void _onPressed() {
     if (_isLoading) return;
-    _periodicCheckAdToShow();
-  }
-
-  void _periodicCheckAdToShow() {
     _isLoading = true;
-    setState(() {});
-    int count = 0;
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (count < 6 && _isLoading) {
-        _showRewardedAd();
-        count++;
-      } else {
-        _timer?.cancel();
-        _isLoading = false;
-        setState(() {});
-      }
-    });
+
+    AdModService.periodicCheckAdToShow(
+        setState: setState,
+        isLoading: _isLoading,
+        showAd: () => AdModService.showRewardedAd(onAdClosed:
+              _afterDismissingRewardedAd,
+            onGettingRewards: _afterWatchingRewardedAd,
+          updateState: _resetState,
+            ),);
   }
 
-  void _showRewardedAd() {
-    if (rewardedAd != null) {
-      rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-        onAdDismissedFullScreenContent: (ad) {
-          Flurry.logEvent('Mod was downloaded');
-          // Очень важно: чтобы переходило в это место при закрытии рекламы,
-          // ни в коем случае нельзя диспосить рекламу при получении награды
-          // в методе onUserEarnedReward при ее показе
-          ad.dispose();
-          _createRewardedAd();
-          _afterDismissingRewardedAd();
-          Navigator.of(context, rootNavigator: true).pop();
-        },
-        onAdFailedToShowFullScreenContent: (ad, error) {
-          ad.dispose();
-          _createRewardedAd();
-          print('Failed to show rewarded ad: $error');
-        },
-      );
-
-      rewardedAd!.show(
-        onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-          Flurry.logEvent('AD Reward was getting');
-          _createRewardedAd();
-          _afterWatchingRewardedAd();
-        },
-      );
-      _isLoading = false;
-      setState(() {});
-      _timer?.cancel();
-      rewardedAd = null;
-    }
+  _resetState() {
+    _isLoading = false;
+    setState(() {});
   }
 
   Future<void> _afterDismissingRewardedAd() async {
@@ -110,6 +52,8 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
   }
 
   Future<void> _afterWatchingRewardedAd() async {
+    Navigator.of(context, rootNavigator: true).pop();
+    // setState(() {});
     bool isInstalled =
         await DeviceApps.isAppInstalled('com.mojang.minecraftpe');
     if (isInstalled) {
