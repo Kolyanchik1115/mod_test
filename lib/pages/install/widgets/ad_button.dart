@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_flurry_sdk/flurry.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
@@ -73,6 +74,7 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     if (rewardedAd != null) {
       rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (ad) {
+          Flurry.logEvent('Mod was downloaded');
           // Очень важно: чтобы переходило в это место при закрытии рекламы,
           // ни в коем случае нельзя диспосить рекламу при получении награды
           // в методе onUserEarnedReward при ее показе
@@ -90,6 +92,7 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
 
       rewardedAd!.show(
         onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+          Flurry.logEvent('AD Reward was getting');
           _createRewardedAd();
           _afterWatchingRewardedAd();
         },
