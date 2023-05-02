@@ -5,22 +5,17 @@ import 'package:mod_test/pages/install/install_page.dart';
 import 'package:mod_test/pages/instruction/instruction_page.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/pages/widgets/rate_us.dart';
+import 'package:mod_test/resources/app_consts.dart';
 import 'package:mod_test/resources/app_icons.dart';
 import 'package:mod_test/resources/app_images.dart';
-import 'package:mod_test/resources/utils/colors.dart';
+import 'package:mod_test/resources/app_colors.dart';
 import 'package:mod_test/services/review_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   static const routeName = '/homepage';
-
-  HomePage({super.key}) {
-    _setup();
-  }
-
-  void _setup() async {
-    await ReviewService.onLogin();
-  }
 
   void _checkLoginCountAndShowRatingDialog(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -36,12 +31,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ReviewService.onLogin();
     _checkLoginCountAndShowRatingDialog(context);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColors.icon,
-        title: const Text('Shader mod', style: TextStyle(color: AppColors.white)),
+        title:
+            const Text('Shader mod', style: TextStyle(color: AppColors.white)),
       ),
       body: Column(
         children: [
@@ -54,7 +52,8 @@ class HomePage extends StatelessWidget {
             children: [
               Expanded(
                 child: IconContainer(
-                  onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                  onPressed: () =>
+                      Navigator.of(context).pushNamedAndRemoveUntil(
                     InstructionPage.routeName,
                     (route) => true,
                   ),
@@ -77,9 +76,8 @@ class HomePage extends StatelessWidget {
               Expanded(
                 child: IconContainer(
                   onPressed: () async {
-                    const url = 'https://www.iubenda.com/privacy-policy/48055999';
                     await launchUrlString(
-                      url,
+                      AppConstantsString.privacyPolicy,
                       mode: LaunchMode.inAppWebView,
                     );
                   },
@@ -97,7 +95,7 @@ class HomePage extends StatelessWidget {
                   (route) => true,
                 );
               },
-              color:AppColors.icon,
+              color: AppColors.icon,
               title: const Text(
                 'Start',
                 style: TextStyle(
@@ -108,7 +106,7 @@ class HomePage extends StatelessWidget {
               ),
               height: 53,
               width: 230,
-              shadowColor:AppColors.icon,
+              shadowColor: AppColors.icon,
             ),
           )
         ],

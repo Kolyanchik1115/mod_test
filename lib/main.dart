@@ -17,12 +17,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'ShaderMod',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SplashPage(),
+      home: SplashPage(),
       onGenerateRoute: AppRouter.generateRoute,
     );
   }

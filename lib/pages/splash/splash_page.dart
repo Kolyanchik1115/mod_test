@@ -1,13 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mod_test/pages/home/home_page.dart';
 import 'package:mod_test/pages/splash/widgets/splash_screen_content.dart';
-
-import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/pages/widgets/splash_widget.dart';
-import 'package:mod_test/resources/addmob_ids.dart';
 import 'package:mod_test/resources/app_images.dart';
 import 'package:mod_test/services/admob_service.dart';
 

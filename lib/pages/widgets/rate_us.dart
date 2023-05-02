@@ -4,7 +4,7 @@ import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/pages/widgets/dialog_container.dart';
 import 'package:mod_test/resources/app_consts.dart';
 import 'package:mod_test/resources/app_icons.dart';
-import 'package:mod_test/resources/utils/colors.dart';
+import 'package:mod_test/resources/app_colors.dart';
 import 'package:mod_test/services/review_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -18,7 +18,6 @@ class RatingDialog extends StatefulWidget {
 class _RatingDialogState extends State<RatingDialog> {
   int _currentRating = 0;
   String rateButtonText = 'Оценить';
-
   @override
   Widget build(BuildContext context) {
     return DialogContainer(

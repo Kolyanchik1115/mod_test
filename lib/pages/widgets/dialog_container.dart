@@ -4,11 +4,9 @@ import 'package:mod_test/pages/widgets/shadow_container.dart';
 import 'package:mod_test/resources/app_icons.dart';
 
 class DialogContainer extends StatelessWidget {
-
   final Widget child;
 
-  const DialogContainer({Key? key, required this.child})
-      : super(key: key);
+  const DialogContainer({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +20,11 @@ class DialogContainer extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            Colors.white,
-            Color.fromRGBO(224, 214, 255, 1)
-          ],
+          colors: [Colors.white, Color.fromRGBO(224, 214, 255, 1)],
         ),
-        shadowColor: Color.fromRGBO(205, 155, 255, 1),
+        shadowColor: const Color.fromRGBO(205, 155, 255, 1),
         child: Padding(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,7 +41,7 @@ class DialogContainer extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(42.0),
+                padding: const EdgeInsets.all(20.0),
                 child: child,
               ),
             ],

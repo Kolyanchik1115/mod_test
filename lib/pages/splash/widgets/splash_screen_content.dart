@@ -1,7 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
-import 'package:mod_test/resources/utils/colors.dart';
+import 'package:mod_test/resources/app_colors.dart';
+import 'package:mod_test/resources/app_consts.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SplashScreenContent extends StatelessWidget {
   final void Function() onPressed;
@@ -25,18 +26,27 @@ class SplashScreenContent extends StatelessWidget {
         Column(
           children: [
             const Text(
-              'If you agree with the',
+              'Если вы согласны с ',
               style: textStyle,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InkWell(
-                    onTap: () {},
-                    child: Text('Privacy Policy',
-                        style: textStyle.copyWith(
-                            decoration: TextDecoration.underline))),
-                const Text(' click Start', style: textStyle),
+                  onTap: () async {
+                    await launchUrlString(
+                      AppConstantsString.privacyPolicy,
+                      mode: LaunchMode.inAppWebView,
+                    );
+                  },
+                  child: Text(
+                    'Privacy Policy',
+                    style: textStyle.copyWith(
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+                const Text(' нажмите Start', style: textStyle),
               ],
             ),
           ],
@@ -47,9 +57,10 @@ class SplashScreenContent extends StatelessWidget {
           color: AppColors.white,
           title: const Text('START',
               style: TextStyle(
-                  color: AppColors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700)),
+                color: AppColors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              )),
           height: 58,
           width: 184,
           onPressed: onPressed,

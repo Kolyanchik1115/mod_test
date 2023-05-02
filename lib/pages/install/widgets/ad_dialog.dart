@@ -8,16 +8,14 @@ class AdDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DialogContainer(
-      child:
-          Column(
-
-            children: const [
-              Text('Чтобы установить мод в \nМайнкрафт, вам нужно \nпосмотреть видеорекламу'),
-              SizedBox(height: 36),
-              RewardedAdButton(),
-            ],
-          ),
-
+      child: Column(
+        children: const [
+          Text(
+              'Чтобы установить мод в \nМайнкрафт, вам нужно \nпосмотреть рекламу'),
+          SizedBox(height: 36),
+          RewardedAdButton(),
+        ],
+      ),
     );
   }
 }

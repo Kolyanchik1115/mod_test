@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flurry_sdk/flurry.dart';
 import 'package:mod_test/pages/install/widgets/ad_dialog.dart';
+import 'package:mod_test/pages/instruction/widgets/instruction_container.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
-import 'package:mod_test/resources/utils/colors.dart';
+import 'package:mod_test/resources/app_colors.dart';
+import 'package:mod_test/resources/app_consts.dart';
+import 'package:mod_test/resources/app_images.dart';
 
 class InstallPage extends StatelessWidget {
   static const routeName = '/install';
@@ -11,6 +14,18 @@ class InstallPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const List images = [
+      AppImages.img1,
+      AppImages.img2,
+      AppImages.img3,
+      AppImages.img4,
+      AppImages.img5,
+      AppImages.img6,
+      AppImages.img7,
+      AppImages.img8,
+      AppImages.img9,
+      AppImages.img10,
+    ];
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -25,15 +40,12 @@ class InstallPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          const ClipRRect(
-            borderRadius: BorderRadius.only(
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20),
             ),
-            child: Image(
-              image: AssetImage('assets/images/img_0-min.jpg'),
-              fit: BoxFit.contain,
-            ),
+            child: Image.asset(AppImages.img0, fit: BoxFit.contain),
           ),
           const SizedBox(height: 20),
           buildInstallButtonWidget(context),
@@ -43,10 +55,7 @@ class InstallPage extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 40),
             child: Text(
-              'С Eternal Shaders графика игры будет поднята на беспрецедентный уровень. Это '
-              'обновление вносит ряд улучшений, таких как реалистичное освещение, тени,'
-              'отражения и динамическая вода. Мир игры будет более ярким и подлинным'
-              ' благодаря сложным деталям и реалистичному движению растений.',
+              AppConstantsString.text1,
               style: TextStyle(height: 1.5),
             ),
           ),
@@ -61,12 +70,7 @@ class InstallPage extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 50),
             child: Text(
-              '* Поддержка RenderDragon для улучшения производительности и качества отображения.\n'
-              '* Эффекты свечения Солнца и Луны для более погружающегося игрового опыта.\n'
-              '* Движение растений для реалистичной и динамичной среды.\n'
-              '* Оптимизация биомов для повышения общей производительности игры.\n'
-              '* Отсутствие задержек для плавной и безшовной игры.\n'
-              '* Совместимость с другими аддонами для дальнейшей настройки и персонализации игр.\n',
+              AppConstantsString.text2,
               style: TextStyle(height: 1.5),
             ),
           ),
@@ -74,49 +78,61 @@ class InstallPage extends StatelessWidget {
             padding: const EdgeInsets.all(15),
             child: Column(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'assets/images/img_1-min.jpg',
-                    fit: BoxFit.cover,
+                ListView(
+                  children: List.generate(
+                    images.length,
+                    (index) => InstructionContainer(
+                      image: Image.asset(images[index]),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'assets/images/img_3-min.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'assets/images/img_5-min.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'assets/images/img_6-min.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'assets/images/img_9-min.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(10),
+                //   child: Image.asset(
+                //     'assets/images/img_1-min.jpg',
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
+                // const SizedBox(height: 10),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(10),
+                //   child: Image.asset(
+                //     'assets/images/img_3-min.jpg',
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
+                // const SizedBox(height: 10),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(10),
+                //   child: Image.asset(
+                //     'assets/images/img_5-min.jpg',
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
+                // const SizedBox(height: 10),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(10),
+                //   child: Image.asset(
+                //     'assets/images/img_6-min.jpg',
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
+                // const SizedBox(height: 10),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(10),
+                //   child: Image.asset(
+                //     'assets/images/img_9-min.jpg',
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
               ],
             ),
           ),
-          buildInstallButtonWidget(context),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: buildInstallButtonWidget(context),
+          ),
         ],
       ),
     );
@@ -134,7 +150,7 @@ class InstallPage extends StatelessWidget {
       color: AppColors.icon,
       title: const Text(
         'Установить',
-        style: TextStyle(color:AppColors.white, fontWeight: FontWeight.bold),
+        style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold),
       ),
       height: 60,
       width: 250,

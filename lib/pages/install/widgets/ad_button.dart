@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mod_test/resources/utils/colors.dart';
+import 'package:mod_test/resources/app_colors.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/services/admob_service.dart';
@@ -18,8 +18,7 @@ class RewardedAdButton extends StatefulWidget {
 }
 
 class _RewardedAdButtonState extends State<RewardedAdButton> {
-  late bool _isLoading;
-  var filePath = '';
+  late final bool _isLoading;
 
   @override
   void initState() {
@@ -33,13 +32,14 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     _isLoading = true;
 
     AdModService.periodicCheckAdToShow(
-        setState: setState,
-        isLoading: _isLoading,
-        showAd: () => AdModService.showRewardedAd(onAdClosed:
-              _afterDismissingRewardedAd,
-            onGettingRewards: _afterWatchingRewardedAd,
-          updateState: _resetState,
-            ),);
+      setState: setState,
+      isLoading: _isLoading,
+      showAd: () => AdModService.showRewardedAd(
+        onAdClosed: _afterDismissingRewardedAd,
+        onGettingRewards: _afterWatchingRewardedAd,
+        updateState: _resetState,
+      ),
+    );
   }
 
   _resetState() {
@@ -47,13 +47,10 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     setState(() {});
   }
 
-  Future<void> _afterDismissingRewardedAd() async {
-    await OpenFile.open(filePath);
-  }
+  Future<void> _afterDismissingRewardedAd() async {}
 
   Future<void> _afterWatchingRewardedAd() async {
     Navigator.of(context, rootNavigator: true).pop();
-    // setState(() {});
     bool isInstalled =
         await DeviceApps.isAppInstalled('com.mojang.minecraftpe');
     if (isInstalled) {
@@ -65,7 +62,7 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
       const fileName = 'spider.mcaddon';
       final file = File('${getAddonDirectory!.path}/$fileName');
       final ready = await file.writeAsBytes(bytes);
-      filePath = ready.path;
+      await OpenFile.open(ready.path);
     } else {
       const snackBar = SnackBar(
         duration: Duration(seconds: 2),

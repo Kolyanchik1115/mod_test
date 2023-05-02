@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mod_test/resources/utils/colors.dart';
+import 'package:mod_test/resources/app_colors.dart';
 
 class ShadowContainer extends StatelessWidget {
   const ShadowContainer({

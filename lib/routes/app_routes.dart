@@ -15,7 +15,7 @@ class AppRouter {
         builder = (_) => const SplashPage();
         break;
       case HomePage.routeName:
-        builder = (_) => HomePage();
+        builder = (_) => const HomePage();
         break;
       case InstructionPage.routeName:
         builder = (_) => const InstructionPage();

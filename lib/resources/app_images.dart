@@ -5,17 +5,17 @@ class AppImages {
   static const String _path1 = 'assets/instructions_image 2';
   static const String _path2 = 'assets/splash';
 
-  static const String img0 = '$_path/img_0-min.png';
-  static const String img1 = '$_path/img_1-min.png';
-  static const String img2 = '$_path/img_2-min.png';
-  static const String img3 = '$_path/img_3-min.png';
-  static const String img4 = '$_path/img_4-min.png';
-  static const String img5 = '$_path/img_5-min.png';
-  static const String img6 = '$_path/img_6-min.png';
-  static const String img7 = '$_path/img_7-min.png';
-  static const String img8 = '$_path/img_8-min.png';
-  static const String img9 = '$_path/img_9-min.png';
-  static const String img10 = '$_path/img_10-min.png';
+  static const String img0 = '$_path/img_0-min.jpg';
+  static const String img1 = '$_path/img_1-min.jpg';
+  static const String img2 = '$_path/img_2-min.jpg';
+  static const String img3 = '$_path/img_3-min.jpg';
+  static const String img4 = '$_path/img_4-min.jpg';
+  static const String img5 = '$_path/img_5-min.jpg';
+  static const String img6 = '$_path/img_6-min.jpg';
+  static const String img7 = '$_path/img_7-min.jpg';
+  static const String img8 = '$_path/img_8-min.jpg';
+  static const String img9 = '$_path/img_9-min.jpg';
+  static const String img10 = '$_path/img_10-min.jpg';
 
   static const String i1 = '$_path1/1.png';
   static const String i2 = '$_path1/2.png';
