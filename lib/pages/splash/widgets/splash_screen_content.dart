@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
+import 'package:mod_test/resources/utils/colors.dart';
 
 class SplashScreenContent extends StatelessWidget {
   final void Function() onPressed;
@@ -16,7 +17,7 @@ class SplashScreenContent extends StatelessWidget {
       letterSpacing: 0.16,
       fontWeight: FontWeight.w600,
       fontSize: 16,
-      color: Colors.white,
+      color: AppColors.white,
     );
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -42,11 +43,11 @@ class SplashScreenContent extends StatelessWidget {
         ),
         const SizedBox(height: 25),
         AppButtonWidget(
-          shadowColor: Colors.white,
-          color: Colors.white,
+          shadowColor: AppColors.white,
+          color: AppColors.white,
           title: const Text('START',
               style: TextStyle(
-                  color: Colors.black,
+                  color: AppColors.black,
                   fontSize: 16,
                   fontWeight: FontWeight.w700)),
           height: 58,

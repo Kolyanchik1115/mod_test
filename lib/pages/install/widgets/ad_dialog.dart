@@ -12,7 +12,7 @@ class AdDialog extends StatelessWidget {
           Column(
 
             children: const [
-              Text('To install a mod in\nMinecraft, you need\nto watch a video ad'),
+              Text('Чтобы установить мод в \nМайнкрафт, вам нужно \nпосмотреть видеорекламу'),
               SizedBox(height: 36),
               RewardedAdButton(),
             ],

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flurry_sdk/flurry.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
+import 'package:mod_test/resources/utils/colors.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/services/admob_service.dart';
@@ -124,7 +125,7 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     } else {
       const snackBar = SnackBar(
         duration: Duration(seconds: 2),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: AppColors.white,
         content: Text(
           'Minecraft не установлен на вашем телефоне',
           style: TextStyle(fontSize: 17),
@@ -149,12 +150,12 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
                 width: 21,
                 height: 21,
               ),
-              const Text('WATCH AD'),
+              const Text('Смотреть'),
               Container(
                 alignment: Alignment.centerRight,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
-                  color: _isLoading ? null : Colors.deepPurple,
+                  color: _isLoading ? null : AppColors.icon,
                 ),
                 width: 21,
                 height: 21,

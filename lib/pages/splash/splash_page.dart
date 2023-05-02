@@ -8,6 +8,7 @@ import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/pages/widgets/splash_widget.dart';
 import 'package:mod_test/resources/addmob_ids.dart';
 import 'package:mod_test/resources/app_images.dart';
+import 'package:mod_test/resources/utils/colors.dart';
 
 class SplashPage extends StatefulWidget {
   static const routeName = '/';
@@ -96,8 +97,8 @@ class _SplashPageState extends State<SplashPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromRGBO(189, 0, 255, 1),
-              Color.fromRGBO(71, 0, 162, 1)
+             AppColors.splash,
+              AppColors.icon
             ],
           ),
         ),
@@ -141,7 +142,7 @@ class SplashScreenContent extends StatelessWidget {
       letterSpacing: 0.16,
       fontWeight: FontWeight.w600,
       fontSize: 16,
-      color: Colors.white,
+      color: AppColors.white,
     );
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -149,7 +150,7 @@ class SplashScreenContent extends StatelessWidget {
         Column(
           children: [
             const Text(
-              'If you agree with the',
+              'Если вы согласны с',
               style: textStyle,
             ),
             Row(
@@ -160,18 +161,18 @@ class SplashScreenContent extends StatelessWidget {
                     child: Text('Privacy Policy',
                         style: textStyle.copyWith(
                             decoration: TextDecoration.underline))),
-                const Text(' click Start', style: textStyle),
+                const Text(' нажмите старт', style: textStyle),
               ],
             ),
           ],
         ),
         const SizedBox(height: 25),
         AppButtonWidget(
-          shadowColor: Colors.white,
-          color: Colors.white,
+          shadowColor: AppColors.white,
+          color: AppColors.white,
           title: const Text('START',
               style: TextStyle(
-                  color: Colors.black,
+                  color: AppColors.black,
                   fontSize: 16,
                   fontWeight: FontWeight.w700)),
           height: 58,
