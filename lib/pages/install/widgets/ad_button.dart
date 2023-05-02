@@ -4,6 +4,8 @@ import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mod_test/resources/app_colors.dart';
+import 'package:mod_test/resources/app_consts.dart';
+import 'package:mod_test/resources/app_texts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/services/admob_service.dart';
@@ -18,12 +20,14 @@ class RewardedAdButton extends StatefulWidget {
 }
 
 class _RewardedAdButtonState extends State<RewardedAdButton> {
-  late final bool _isLoading;
+  late bool _isLoading;
+  late String _filePath;
 
   @override
   void initState() {
     super.initState();
     _isLoading = false;
+    _filePath = '';
     AdModService.createRewardedAd();
   }
 
@@ -35,8 +39,8 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
       setState: setState,
       isLoading: _isLoading,
       showAd: () => AdModService.showRewardedAd(
-        onAdClosed: _afterDismissingRewardedAd,
-        onGettingRewards: _afterWatchingRewardedAd,
+        onAdClosed: _onClose,
+        onGettingRewards: _onWatch,
         updateState: _resetState,
       ),
     );
@@ -47,22 +51,19 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     setState(() {});
   }
 
-  Future<void> _afterDismissingRewardedAd() async {}
-
-  Future<void> _afterWatchingRewardedAd() async {
-    Navigator.of(context, rootNavigator: true).pop();
+  Future<void> _onWatch() async {
     bool isInstalled =
-        await DeviceApps.isAppInstalled('com.mojang.minecraftpe');
+        await DeviceApps.isAppInstalled(AppConstantsString.minecraftPath);
+
     if (isInstalled) {
-      const url =
-          'https://www.dropbox.com/s/5wc31t4yio8j2f8/spider.mcaddon?dl=1';
-      final response = await http.get(Uri.parse(url));
+      final response = await http.get(Uri.parse(AppConstantsString.fileUrl));
       final getAddonDirectory = await getExternalStorageDirectory();
       final bytes = response.bodyBytes;
-      const fileName = 'spider.mcaddon';
-      final file = File('${getAddonDirectory!.path}/$fileName');
+
+      final file =
+          File('${getAddonDirectory!.path}/${AppConstantsString.fileName}');
       final ready = await file.writeAsBytes(bytes);
-      await OpenFile.open(ready.path);
+      _filePath = ready.path;
     } else {
       const snackBar = SnackBar(
         duration: Duration(seconds: 2),
@@ -74,6 +75,11 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
+  }
+
+  Future<void> _onClose() async {
+    Navigator.of(context, rootNavigator: true).pop();
+    await OpenFile.open(_filePath);
   }
 
   @override
@@ -91,7 +97,10 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
                 width: 21,
                 height: 21,
               ),
-              const Text('Смотреть'),
+              const Text(
+                'СМОТРЕТЬ',
+                style: AppText.txt1,
+              ),
               Container(
                 alignment: Alignment.centerRight,
                 decoration: BoxDecoration(

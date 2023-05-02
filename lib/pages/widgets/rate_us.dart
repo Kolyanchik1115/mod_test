@@ -5,6 +5,7 @@ import 'package:mod_test/pages/widgets/dialog_container.dart';
 import 'package:mod_test/resources/app_consts.dart';
 import 'package:mod_test/resources/app_icons.dart';
 import 'package:mod_test/resources/app_colors.dart';
+import 'package:mod_test/resources/app_texts.dart';
 import 'package:mod_test/services/review_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -17,7 +18,7 @@ class RatingDialog extends StatefulWidget {
 
 class _RatingDialogState extends State<RatingDialog> {
   int _currentRating = 0;
-  String rateButtonText = 'Оценить';
+  String rateButtonText = 'ОЦЕНИТЬ';
   @override
   Widget build(BuildContext context) {
     return DialogContainer(
@@ -26,6 +27,7 @@ class _RatingDialogState extends State<RatingDialog> {
         children: [
           const Text(
             'Пожалуйста, оцените приложение.\nВаши отзывы очень\n важны для нас',
+            style: AppText.txt5,
             textAlign: TextAlign.center,
           ),
           Padding(
@@ -39,9 +41,9 @@ class _RatingDialogState extends State<RatingDialog> {
                     setState(() {
                       _currentRating = index + 1;
                       if (_currentRating >= 4) {
-                        rateButtonText = 'Rate on Google Play';
+                        rateButtonText = 'RATE US ON GOOGLE PLAY';
                       } else {
-                        rateButtonText = 'Оценить';
+                        rateButtonText = 'ОЦЕНИТЬ';
                       }
                     });
                   },
@@ -92,37 +94,10 @@ class FeedbackAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: SizedBox(
-        height: 180,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: SvgPicture.asset(
-                    AppIcons.close,
-                  ),
-                ),
-              ),
-              const Text(
-                'Спасибо за ваш\n отзыв',
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox.shrink(),
-            ],
-          ),
-        ),
+    return const DialogContainer(
+      child: Text(
+        'СПАСИБО ЗА ВАШ ОТЗЫВ',
+        style: AppText.txt2,
       ),
     );
   }

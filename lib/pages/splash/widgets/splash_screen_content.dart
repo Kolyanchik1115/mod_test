@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/resources/app_colors.dart';
 import 'package:mod_test/resources/app_consts.dart';
+import 'package:mod_test/resources/app_texts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SplashScreenContent extends StatelessWidget {
@@ -14,12 +15,6 @@ class SplashScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(
-      letterSpacing: 0.16,
-      fontWeight: FontWeight.w600,
-      fontSize: 16,
-      color: AppColors.white,
-    );
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -27,7 +22,7 @@ class SplashScreenContent extends StatelessWidget {
           children: [
             const Text(
               'Если вы согласны с ',
-              style: textStyle,
+              style: AppText.txt1,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -41,12 +36,12 @@ class SplashScreenContent extends StatelessWidget {
                   },
                   child: Text(
                     'Privacy Policy',
-                    style: textStyle.copyWith(
+                    style: AppText.txt1.copyWith(
                       decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
-                const Text(' нажмите Start', style: textStyle),
+                const Text(' нажмите Start', style: AppText.txt1),
               ],
             ),
           ],

@@ -6,6 +6,7 @@ import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/resources/app_colors.dart';
 import 'package:mod_test/resources/app_consts.dart';
 import 'package:mod_test/resources/app_images.dart';
+import 'package:mod_test/resources/app_texts.dart';
 
 class InstallPage extends StatelessWidget {
   static const routeName = '/install';
@@ -14,18 +15,6 @@ class InstallPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // const List images = [
-    //   AppImages.img1,
-    //   AppImages.img2,
-    //   AppImages.img3,
-    //   AppImages.img4,
-    //   AppImages.img5,
-    //   AppImages.img6,
-    //   AppImages.img7,
-    //   AppImages.img8,
-    //   AppImages.img9,
-    //   AppImages.img10,
-    // ];
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -39,6 +28,7 @@ class InstallPage extends StatelessWidget {
         backgroundColor: AppColors.icon,
       ),
       body: ListView(
+        shrinkWrap: true,
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.only(
@@ -75,58 +65,17 @@ class InstallPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(5),
             child: Column(
-              children: [
-                // ListView(
-                //   children: List.generate(
-                //     images.length,
-                //     (index) => InstructionContainer(
-                //       image: Image.asset(images[index]),
-                //     ),
-                //   ),
-                // ),
-
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'assets/images/img_1-min.jpg',
-                    fit: BoxFit.cover,
+              children: List.generate(
+                AppImages.images1.length,
+                (index) => InstructionContainer(
+                  image: Image.asset(
+                    AppImages.images1[index],
+                    fit: BoxFit.contain,
                   ),
                 ),
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'assets/images/img_3-min.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'assets/images/img_5-min.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'assets/images/img_6-min.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'assets/images/img_9-min.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
           Padding(
@@ -149,8 +98,8 @@ class InstallPage extends StatelessWidget {
       },
       color: AppColors.icon,
       title: const Text(
-        'Установить',
-        style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold),
+        'УСТАНОВИТЬ',
+        style: AppText.txt1,
       ),
       height: 60,
       width: 250,

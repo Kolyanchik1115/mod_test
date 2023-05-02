@@ -9,7 +9,7 @@ class FlurryAnalyticsService {
         .withLogEnabled(true)
         .withLogLevel(LogLevel.debug)
         .build(
-          androidAPIKey: "Q7GFTZZMGY4TBNHRTVQ8",
+          androidAPIKey: "Z4CV54XKQFVZ7RYTQ79C",
         );
   }
 }

@@ -32,4 +32,32 @@ class AppImages {
   static const String splashImage = '$_path2/splash_image.png';
   static const String splashLoading = '$_path2/splash_loading.png';
   static const String allWorlds = '$_path2/all_worlds.png';
+
+  static const List images1 = [
+    img0,
+    img1,
+    img2,
+    img3,
+    img4,
+    img5,
+    img6,
+    img7,
+    img8,
+    img9,
+    img10
+  ];
+
+  static const List images2 = [
+    i1,
+    i2,
+    i3,
+    i4,
+    i5,
+    i6,
+    i7,
+    i8,
+    i9,
+    i10,
+    i11,
+  ];
 }

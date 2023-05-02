@@ -3,9 +3,12 @@ class AppConstantsString {
 
   static const String privacyPolicy =
       'https://www.iubenda.com/privacy-policy/48055999';
+  static const String fileUrl =
+      'https://www.dropbox.com/s/5wc31t4yio8j2f8/spider.mcaddon?dl=1';
+  static const String fileName = 'spider.mcaddon';
+  static const String minecraftPath = 'com.mojang.minecraftpe';
   static const String linkToPlayMarket =
-      'market://details?id=com.immgo.immgomobile';
-  static const String minecraft = 'market://details?id=com.mojang.minecraftpe';
+      'market://details?id=com.mcpe_shader.mod_test';
 
   static const String text1 =
       'С Eternal Shaders графика игры будет поднята на беспрецедентный уровень. Это '

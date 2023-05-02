@@ -9,6 +9,7 @@ import 'package:mod_test/resources/app_consts.dart';
 import 'package:mod_test/resources/app_icons.dart';
 import 'package:mod_test/resources/app_images.dart';
 import 'package:mod_test/resources/app_colors.dart';
+import 'package:mod_test/resources/app_texts.dart';
 import 'package:mod_test/services/review_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -69,7 +70,7 @@ class HomePage extends StatelessWidget {
                       builder: (_) => const RatingDialog(),
                     );
                   },
-                  svg: SvgPicture.asset(AppIcons.instruction),
+                  svg: SvgPicture.asset(AppIcons.rateUs),
                   text: 'Оцените нас',
                 ),
               ),
@@ -97,12 +98,8 @@ class HomePage extends StatelessWidget {
               },
               color: AppColors.icon,
               title: const Text(
-                'Start',
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                'STRART',
+                style: AppText.txt1,
               ),
               height: 53,
               width: 230,
