@@ -16,6 +16,19 @@ class AppImages {
   static const String img8 = '$_path/img_8-min.jpg';
   static const String img9 = '$_path/img_9-min.jpg';
   static const String img10 = '$_path/img_10-min.jpg';
+  static const List installImages = [
+    img0,
+    img1,
+    img2,
+    img3,
+    img4,
+    img5,
+    img6,
+    img7,
+    img8,
+    img9,
+    img10
+  ];
 
   static const String i1 = '$_path1/1.png';
   static const String i2 = '$_path1/2.png';

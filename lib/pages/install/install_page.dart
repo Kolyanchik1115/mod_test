@@ -14,18 +14,7 @@ class InstallPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List images = [
-      AppImages.img1,
-      AppImages.img2,
-      AppImages.img3,
-      AppImages.img4,
-      AppImages.img5,
-      AppImages.img6,
-      AppImages.img7,
-      AppImages.img8,
-      AppImages.img9,
-      AppImages.img10,
-    ];
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -39,6 +28,7 @@ class InstallPage extends StatelessWidget {
         backgroundColor: AppColors.icon,
       ),
       body: ListView(
+        shrinkWrap: true,
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.only(
@@ -75,58 +65,14 @@ class InstallPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(5),
             child: Column(
-              children: [
-                ListView(
-                  children: List.generate(
-                    images.length,
-                    (index) => InstructionContainer(
-                      image: Image.asset(images[index]),
-                    ),
-                  ),
+              children: List.generate(
+                AppImages.installImages.length,
+                (index) => InstructionContainer(
+                  image: Image.asset(AppImages.installImages[index],fit: BoxFit.contain,),
                 ),
-                
-                // ClipRRect(
-                //   borderRadius: BorderRadius.circular(10),
-                //   child: Image.asset(
-                //     'assets/images/img_1-min.jpg',
-                //     fit: BoxFit.cover,
-                //   ),
-                // ),
-                // const SizedBox(height: 10),
-                // ClipRRect(
-                //   borderRadius: BorderRadius.circular(10),
-                //   child: Image.asset(
-                //     'assets/images/img_3-min.jpg',
-                //     fit: BoxFit.cover,
-                //   ),
-                // ),
-                // const SizedBox(height: 10),
-                // ClipRRect(
-                //   borderRadius: BorderRadius.circular(10),
-                //   child: Image.asset(
-                //     'assets/images/img_5-min.jpg',
-                //     fit: BoxFit.cover,
-                //   ),
-                // ),
-                // const SizedBox(height: 10),
-                // ClipRRect(
-                //   borderRadius: BorderRadius.circular(10),
-                //   child: Image.asset(
-                //     'assets/images/img_6-min.jpg',
-                //     fit: BoxFit.cover,
-                //   ),
-                // ),
-                // const SizedBox(height: 10),
-                // ClipRRect(
-                //   borderRadius: BorderRadius.circular(10),
-                //   child: Image.asset(
-                //     'assets/images/img_9-min.jpg',
-                //     fit: BoxFit.cover,
-                //   ),
-                // ),
-              ],
+              ),
             ),
           ),
           Padding(
