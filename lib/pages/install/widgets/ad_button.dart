@@ -22,12 +22,14 @@ class RewardedAdButton extends StatefulWidget {
 class _RewardedAdButtonState extends State<RewardedAdButton> {
   late bool _isLoading;
   late String _filePath;
+  late String _scaffoldMessage;
 
   @override
   void initState() {
     super.initState();
     _isLoading = false;
     _filePath = '';
+    _scaffoldMessage = '';
     AdModService.createRewardedAd();
   }
 
@@ -64,21 +66,30 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
       final ready = await file.writeAsBytes(bytes);
       _filePath = ready.path;
     } else {
-      const snackBar = SnackBar(
-        duration: Duration(seconds: 2),
-        backgroundColor: AppColors.icon,
-        content: Text(
-          'Minecraft не установлен на вашем телефоне',
-          style: AppText.txt1,
-        ),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      _scaffoldMessage = 'Minecraft не установлен на вашем телефоне';
     }
+  }
+
+  void _showSnackBar() {
+    final snackBar = SnackBar(
+      duration: const Duration(seconds: 3),
+      backgroundColor: AppColors.icon,
+      content: Text(
+        _scaffoldMessage,
+        style: AppText.txt1,
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Future<void> _onClose() async {
     Navigator.of(context, rootNavigator: true).pop();
-    await OpenFile.open(_filePath);
+    if (_scaffoldMessage.isNotEmpty) {
+      _showSnackBar();
+    } else {
+      await OpenFile.open(_filePath);
+    }
+
   }
 
   @override

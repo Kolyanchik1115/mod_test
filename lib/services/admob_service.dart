@@ -80,6 +80,7 @@ class AdModService {
         onAdDismissedFullScreenContent: (Ad ad) {
           onAdClosed();
           ad.dispose();
+          createRewardedAd();
         },
         onAdFailedToShowFullScreenContent: (Ad ad, error) {
           ad.dispose();
