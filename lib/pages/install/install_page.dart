@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_flurry_sdk/flurry.dart';
 import 'package:mod_test/pages/install/widgets/ad_dialog.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
-
+import 'package:mod_test/resources/utils/colors.dart';
 
 class InstallPage extends StatelessWidget {
   static const routeName = '/install';
@@ -22,7 +21,7 @@ class InstallPage extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: AppColors.icon,
       ),
       body: ListView(
         children: [
@@ -44,11 +43,10 @@ class InstallPage extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 40),
             child: Text(
-              'With Eternal Shaders, the graphics of the game will be elevated to an unprecedented level.'
-              'This update brings in a range of enhancements such as realistic lighting, shadows,'
-              ' reflections, and dynamic water. The game world will be more vibrant and'
-              'authentic, thanks'
-              'to the intricate details and lifelike movement of the plants',
+              'С Eternal Shaders графика игры будет поднята на беспрецедентный уровень. Это '
+              'обновление вносит ряд улучшений, таких как реалистичное освещение, тени,'
+              'отражения и динамическая вода. Мир игры будет более ярким и подлинным'
+              ' благодаря сложным деталям и реалистичному движению растений.',
               style: TextStyle(height: 1.5),
             ),
           ),
@@ -56,19 +54,19 @@ class InstallPage extends StatelessWidget {
           const Padding(
               padding: EdgeInsets.only(left: 40),
               child: Text(
-                'Features of the Eternal Shaders Mod: ',
+                'Особенности мода Eternal Shaders: ',
                 style: TextStyle(fontWeight: FontWeight.bold),
               )),
           const SizedBox(height: 20),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 50),
             child: Text(
-              '* RenderDragon support for improved rendering performance and quality.\n'
-              '* Sun and Moon glow effects for a more immersive gameplay experience.\n'
-              '* Plant movement for a realistic and dynamic environment.\n'
-              '* Biome Optimization to enhance the overall game performance.\n'
-              '* No lagging for smoother and seamless gameplay.\n'
-              '* Compatibility with other addons to customize and personalize the game even futher.\n',
+              '* Поддержка RenderDragon для улучшения производительности и качества отображения.\n'
+              '* Эффекты свечения Солнца и Луны для более погружающегося игрового опыта.\n'
+              '* Движение растений для реалистичной и динамичной среды.\n'
+              '* Оптимизация биомов для повышения общей производительности игры.\n'
+              '* Отсутствие задержек для плавной и безшовной игры.\n'
+              '* Совместимость с другими аддонами для дальнейшей настройки и персонализации игр.\n',
               style: TextStyle(height: 1.5),
             ),
           ),
@@ -126,21 +124,20 @@ class InstallPage extends StatelessWidget {
 
   AppButtonWidget buildInstallButtonWidget(BuildContext context) {
     return AppButtonWidget(
-          onPressed: () {
-            Flurry.logEvent('Pressed INSTALL button');
-            showDialog(
-              context: context,
-              builder: (_) => const AdDialog(),
-            );
-          },
-          color: Colors.deepPurple,
-          title: const Text(
-            'INSTALL',
-            style:
-                TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          height: 60,
-          width: 250,
+      onPressed: () {
+        Flurry.logEvent('Pressed INSTALL button');
+        showDialog(
+          context: context,
+          builder: (_) => const AdDialog(),
         );
+      },
+      color: AppColors.icon,
+      title: const Text(
+        'Установить',
+        style: TextStyle(color:AppColors.white, fontWeight: FontWeight.bold),
+      ),
+      height: 60,
+      width: 250,
+    );
   }
 }

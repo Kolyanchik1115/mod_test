@@ -4,6 +4,7 @@ import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/pages/widgets/dialog_container.dart';
 import 'package:mod_test/resources/app_consts.dart';
 import 'package:mod_test/resources/app_icons.dart';
+import 'package:mod_test/resources/utils/colors.dart';
 import 'package:mod_test/services/review_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -16,7 +17,7 @@ class RatingDialog extends StatefulWidget {
 
 class _RatingDialogState extends State<RatingDialog> {
   int _currentRating = 0;
-  String rateButtonText = 'Rate';
+  String rateButtonText = 'Оценить';
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class _RatingDialogState extends State<RatingDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
-            'Please rate the app.\n Your feedback is very\n important to us',
+            'Пожалуйста, оцените приложение.\nВаши отзывы очень\n важны для нас',
             textAlign: TextAlign.center,
           ),
           Padding(
@@ -41,14 +42,14 @@ class _RatingDialogState extends State<RatingDialog> {
                       if (_currentRating >= 4) {
                         rateButtonText = 'Rate on Google Play';
                       } else {
-                        rateButtonText = 'Rate';
+                        rateButtonText = 'Оценить';
                       }
                     });
                   },
                   child: _currentRating > index
                       ? SvgPicture.asset(
                           AppIcons.starFill,
-                          color: Colors.deepPurple,
+                          color: AppColors.icon,
                         )
                       : SvgPicture.asset(AppIcons.starClear),
                 ),
@@ -56,7 +57,7 @@ class _RatingDialogState extends State<RatingDialog> {
             ),
           ),
           AppButtonWidget(
-            color: Colors.deepPurple,
+            color: AppColors.icon,
             title: Text(rateButtonText),
             height: 55,
             width: 230,
@@ -116,7 +117,7 @@ class FeedbackAlert extends StatelessWidget {
                 ),
               ),
               const Text(
-                'Thanks for your\n feedback',
+                'Спасибо за ваш\n отзыв',
                 textAlign: TextAlign.center,
               ),
               const SizedBox.shrink(),

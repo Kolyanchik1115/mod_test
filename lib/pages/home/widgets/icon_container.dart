@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mod_test/resources/utils/colors.dart';
 
 class IconContainer extends StatelessWidget {
   final SvgPicture svg;
@@ -21,7 +22,7 @@ class IconContainer extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(11),
-              color: Colors.deepPurple,
+              color: AppColors.icon,
             ),
             width: 50,
             height: 50,

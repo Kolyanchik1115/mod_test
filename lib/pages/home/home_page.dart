@@ -7,6 +7,7 @@ import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/pages/widgets/rate_us.dart';
 import 'package:mod_test/resources/app_icons.dart';
 import 'package:mod_test/resources/app_images.dart';
+import 'package:mod_test/resources/utils/colors.dart';
 import 'package:mod_test/services/review_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -39,8 +40,8 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.deepPurple,
-        title: const Text('Shader mod', style: TextStyle(color: Colors.white)),
+        backgroundColor: AppColors.icon,
+        title: const Text('Shader mod', style: TextStyle(color: AppColors.white)),
       ),
       body: Column(
         children: [
@@ -51,34 +52,40 @@ class HomePage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconContainer(
-                onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
-                  InstructionPage.routeName,
-                  (route) => true,
+              Expanded(
+                child: IconContainer(
+                  onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                    InstructionPage.routeName,
+                    (route) => true,
+                  ),
+                  svg: SvgPicture.asset(AppIcons.instruction),
+                  text: 'Инструкция',
                 ),
-                svg: SvgPicture.asset(AppIcons.instruction),
-                text: 'Instruction',
               ),
-              IconContainer(
-                onPressed: () async {
-                  showDialog(
-                    context: context,
-                    builder: (_) => const RatingDialog(),
-                  );
-                },
-                svg: SvgPicture.asset(AppIcons.rateUs),
-                text: 'Rate us',
+              Expanded(
+                child: IconContainer(
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (_) => const RatingDialog(),
+                    );
+                  },
+                  svg: SvgPicture.asset(AppIcons.instruction),
+                  text: 'Оцените нас',
+                ),
               ),
-              IconContainer(
-                onPressed: () async {
-                  const url = 'https://www.iubenda.com/privacy-policy/48055999';
-                  await launchUrlString(
-                    url,
-                    mode: LaunchMode.inAppWebView,
-                  );
-                },
-                svg: SvgPicture.asset(AppIcons.privacy),
-                text: 'Privacy\n policy',
+              Expanded(
+                child: IconContainer(
+                  onPressed: () async {
+                    const url = 'https://www.iubenda.com/privacy-policy/48055999';
+                    await launchUrlString(
+                      url,
+                      mode: LaunchMode.inAppWebView,
+                    );
+                  },
+                  svg: SvgPicture.asset(AppIcons.privacy),
+                  text: 'Privacy\n policy',
+                ),
               ),
             ],
           ),
@@ -90,18 +97,18 @@ class HomePage extends StatelessWidget {
                   (route) => true,
                 );
               },
-              color: Colors.deepPurple,
+              color:AppColors.icon,
               title: const Text(
                 'Start',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.white,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               height: 53,
               width: 230,
-              shadowColor: Colors.deepPurple,
+              shadowColor:AppColors.icon,
             ),
           )
         ],
