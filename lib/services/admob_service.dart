@@ -5,7 +5,7 @@ import 'package:flutter_flurry_sdk/flurry.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mod_test/resources/addmob_ids.dart';
 
-class AdModService {
+abstract class AdModService {
   AdModService._();
 
   static InterstitialAd? _interstitialAd;
@@ -79,12 +79,13 @@ class AdModService {
       _rewardedAd?.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (Ad ad) {
           onAdClosed();
+          updateState(false);
           ad.dispose();
           createRewardedAd();
         },
         onAdFailedToShowFullScreenContent: (Ad ad, error) {
           ad.dispose();
-          updateState();
+          updateState(false);
           createRewardedAd();
           Flurry.logEvent('Failed to show rewarded ad: $error');
         },
@@ -92,33 +93,32 @@ class AdModService {
       _rewardedAd!.show(
         onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
           onGettingRewards();
+
           Flurry.logEvent('AD Reward was getting');
           createRewardedAd();
         },
       );
       _rewardedAd = null;
       _timer?.cancel();
-      updateState();
+      updateState(false);
     }
   }
 
   static void periodicCheckAdToShow({
     required bool isLoading,
     required Function showAd,
-    required Function setState,
+    required Function setLoading,
   }) {
-    isLoading = true;
-    setState(() {});
+    setLoading(true);
     int count = 0;
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (count < 6 && isLoading) {
+      if (count < 9 && isLoading) {
         showAd();
         count++;
       } else {
         _timer?.cancel();
-
-        setState(() {});
+        setLoading(false);
       }
     });
   }

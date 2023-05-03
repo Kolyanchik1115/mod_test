@@ -36,30 +36,32 @@ class _RatingDialogState extends State<RatingDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
                 5,
-                (index) => GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _currentRating = index + 1;
-                      if (_currentRating >= 4) {
-                        rateButtonText = 'RATE US ON GOOGLE PLAY';
-                      } else {
-                        rateButtonText = 'ОЦЕНИТЬ';
-                      }
-                    });
-                  },
-                  child: _currentRating > index
-                      ? SvgPicture.asset(
-                          AppIcons.starFill,
-                          color: AppColors.icon,
-                        )
-                      : SvgPicture.asset(AppIcons.starClear),
+                (index) => Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _currentRating = index + 1;
+                        if (_currentRating >= 4) {
+                          rateButtonText = 'ОЦЕНИ НАС В ПЛЕЙ МАРКЕТЕ';
+                        } else {
+                          rateButtonText = 'ОЦЕНИТЬ';
+                        }
+                      });
+                    },
+                    child: _currentRating > index
+                        ? SvgPicture.asset(
+                            AppIcons.starFill,
+                            color: AppColors.icon,
+                          )
+                        : SvgPicture.asset(AppIcons.starClear),
+                  ),
                 ),
               ),
             ),
           ),
           AppButtonWidget(
             color: AppColors.icon,
-            title: Text(rateButtonText),
+            title: FittedBox(child: Text(rateButtonText)),
             height: 55,
             width: 230,
             onPressed: () async {

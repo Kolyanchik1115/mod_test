@@ -23,10 +23,15 @@ class _SplashPageState extends State<SplashPage> {
 
     AdModService.createInterstitialAd();
     AdModService.periodicCheckAdToShow(
-      setState: setState,
+      setLoading: (loading) => _setLoading(loading),
       isLoading: _isLoading,
       showAd: () => AdModService.showInterstitialAd(_onAdClose, setState),
     );
+  }
+
+  _setLoading(bool loading) {
+    _isLoading = loading;
+    setState(() {});
   }
 
   void _onAdClose() {
@@ -38,6 +43,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     _isLoading = false;
+    AdModService.createRewardedAd();
     AdModService.createInterstitialAd();
   }
 

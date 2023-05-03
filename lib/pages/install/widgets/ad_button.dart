@@ -36,20 +36,21 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
   void _onPressed() {
     if (_isLoading) return;
     _isLoading = true;
+    _onWatch();
 
     AdModService.periodicCheckAdToShow(
-      setState: setState,
+      setLoading: (loading) => _setLoading(loading),
       isLoading: _isLoading,
       showAd: () => AdModService.showRewardedAd(
         onAdClosed: _onClose,
         onGettingRewards: _onWatch,
-        updateState: _resetState,
+        updateState: _setLoading,
       ),
     );
   }
 
-  _resetState() {
-    _isLoading = false;
+  _setLoading(bool loading) {
+    _isLoading = loading;
     setState(() {});
   }
 
@@ -84,7 +85,7 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
 
   Future<void> _onClose() async {
     Navigator.of(context, rootNavigator: true).pop();
-    await Future.delayed(const Duration(milliseconds: 500));
+
     if (_scaffoldMessage.isNotEmpty) {
       _showSnackBar();
     } else {
@@ -115,7 +116,7 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
                 alignment: Alignment.centerRight,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
-                  color: _isLoading ? null : AppColors.icon,
+                  color: _isLoading ? null : AppColors.ad,
                 ),
                 width: 21,
                 height: 21,

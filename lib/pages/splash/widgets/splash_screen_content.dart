@@ -1,11 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mod_test/pages/widgets/button_widget.dart';
 import 'package:mod_test/resources/app_colors.dart';
 import 'package:mod_test/resources/app_consts.dart';
 import 'package:mod_test/resources/app_texts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class SplashScreenContent extends StatelessWidget {
+class SplashScreenContent extends StatefulWidget {
   final void Function() onPressed;
 
   const SplashScreenContent({
@@ -14,7 +17,33 @@ class SplashScreenContent extends StatelessWidget {
   });
 
   @override
+  State<SplashScreenContent> createState() => _SplashScreenContentState();
+}
+
+class _SplashScreenContentState extends State<SplashScreenContent> {
+  late StreamSubscription<InternetConnectionStatus> connectionStatus;
+  late bool check;
+
+  @override
+  void initState() {
+    connectionStatus =
+        InternetConnectionChecker().onStatusChange.listen((status) {
+      if (status == InternetConnectionStatus.connected) {
+        check = true;
+      } else {
+        check = false;
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    const snackBar = SnackBar(
+      content: Text('Отстутствует интернет подключение'),
+      backgroundColor: AppColors.error,
+    );
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -41,7 +70,7 @@ class SplashScreenContent extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Text(' нажмите Start', style: AppText.txt1),
+                const Text(' нажмите СТАРТ', style: AppText.txt1),
               ],
             ),
           ],
@@ -50,7 +79,7 @@ class SplashScreenContent extends StatelessWidget {
         AppButtonWidget(
           shadowColor: AppColors.white,
           color: AppColors.white,
-          title: const Text('START',
+          title: const Text('СТАРТ',
               style: TextStyle(
                 color: AppColors.black,
                 fontSize: 16,
@@ -58,7 +87,9 @@ class SplashScreenContent extends StatelessWidget {
               )),
           height: 58,
           width: 184,
-          onPressed: onPressed,
+          onPressed: () => check == true
+              ? widget.onPressed()
+              : ScaffoldMessenger.of(context).showSnackBar(snackBar),
         ),
       ],
     );
