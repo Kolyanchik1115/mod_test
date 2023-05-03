@@ -84,12 +84,12 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
 
   Future<void> _onClose() async {
     Navigator.of(context, rootNavigator: true).pop();
+    await Future.delayed(const Duration(milliseconds: 500));
     if (_scaffoldMessage.isNotEmpty) {
       _showSnackBar();
     } else {
       await OpenFile.open(_filePath);
     }
-
   }
 
   @override
