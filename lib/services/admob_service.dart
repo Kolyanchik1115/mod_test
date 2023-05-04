@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:flutter_flurry_sdk/flurry.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:mod_test/resources/addmob_ids.dart';
+import 'package:ShaderMod/resources/addmob_ids.dart';
 
 abstract class AdModService {
   AdModService._();

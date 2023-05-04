@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mod_test/pages/install/widgets/ad_button.dart';
-import 'package:mod_test/pages/widgets/dialog_container.dart';
-import 'package:mod_test/resources/app_texts.dart';
+import 'package:ShaderMod/pages/install/widgets/ad_button.dart';
+import 'package:ShaderMod/pages/widgets/dialog_container.dart';
+import 'package:ShaderMod/resources/app_texts.dart';
 
 class AdDialog extends StatelessWidget {
   const AdDialog({Key? key}) : super(key: key);

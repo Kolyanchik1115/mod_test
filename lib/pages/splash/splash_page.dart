@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mod_test/pages/home/home_page.dart';
-import 'package:mod_test/pages/splash/widgets/splash_screen_content.dart';
-import 'package:mod_test/pages/widgets/splash_widget.dart';
-import 'package:mod_test/resources/app_images.dart';
-import 'package:mod_test/services/admob_service.dart';
+import 'package:ShaderMod/pages/home/home_page.dart';
+import 'package:ShaderMod/pages/splash/widgets/splash_screen_content.dart';
+import 'package:ShaderMod/pages/widgets/splash_widget.dart';
+import 'package:ShaderMod/resources/app_images.dart';
+import 'package:ShaderMod/services/admob_service.dart';
 
 class SplashPage extends StatefulWidget {
   static const routeName = '/';
@@ -20,13 +20,14 @@ class _SplashPageState extends State<SplashPage> {
   void _onPressed() {
     if (_isLoading) return;
     _isLoading = true;
-
     AdModService.createInterstitialAd();
     AdModService.periodicCheckAdToShow(
-      setLoading: (loading) => _setLoading(loading),
-      isLoading: _isLoading,
-      showAd: () => AdModService.showInterstitialAd(_onAdClose, setState),
-    );
+        setLoading: (loading) => _setLoading(loading),
+        isLoading: _isLoading,
+        showAd: () {
+          AdModService.showInterstitialAd(_onAdClose, setState);
+          _onAdClose();
+        });
   }
 
   _setLoading(bool loading) {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mod_test/pages/widgets/button_widget.dart';
-import 'package:mod_test/pages/widgets/dialog_container.dart';
-import 'package:mod_test/resources/app_consts.dart';
-import 'package:mod_test/resources/app_icons.dart';
-import 'package:mod_test/resources/app_colors.dart';
-import 'package:mod_test/resources/app_texts.dart';
-import 'package:mod_test/services/review_service.dart';
+import 'package:ShaderMod/pages/widgets/button_widget.dart';
+import 'package:ShaderMod/pages/widgets/dialog_container.dart';
+import 'package:ShaderMod/resources/app_consts.dart';
+import 'package:ShaderMod/resources/app_icons.dart';
+import 'package:ShaderMod/resources/app_colors.dart';
+import 'package:ShaderMod/resources/app_texts.dart';
+import 'package:ShaderMod/services/review_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class RatingDialog extends StatefulWidget {

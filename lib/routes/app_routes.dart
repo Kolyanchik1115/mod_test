@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mod_test/pages/home/home_page.dart';
-import 'package:mod_test/pages/install/install_page.dart';
-import 'package:mod_test/pages/instruction/instruction_page.dart';
-import 'package:mod_test/pages/splash/splash_page.dart';
+import 'package:ShaderMod/pages/home/home_page.dart';
+import 'package:ShaderMod/pages/install/install_page.dart';
+import 'package:ShaderMod/pages/instruction/instruction_page.dart';
+import 'package:ShaderMod/pages/splash/splash_page.dart';
 
 class AppRouter {
   const AppRouter._();

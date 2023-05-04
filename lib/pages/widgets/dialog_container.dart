@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mod_test/pages/widgets/shadow_container.dart';
-import 'package:mod_test/resources/app_icons.dart';
+import 'package:ShaderMod/pages/widgets/shadow_container.dart';
+import 'package:ShaderMod/resources/app_icons.dart';
 
 class DialogContainer extends StatelessWidget {
   final Widget child;

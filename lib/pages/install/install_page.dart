@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flurry_sdk/flurry.dart';
-import 'package:mod_test/pages/install/widgets/ad_dialog.dart';
-import 'package:mod_test/pages/instruction/widgets/instruction_container.dart';
-import 'package:mod_test/pages/widgets/button_widget.dart';
-import 'package:mod_test/resources/app_colors.dart';
-import 'package:mod_test/resources/app_consts.dart';
-import 'package:mod_test/resources/app_images.dart';
-import 'package:mod_test/resources/app_texts.dart';
+import 'package:ShaderMod/pages/install/widgets/ad_dialog.dart';
+import 'package:ShaderMod/pages/instruction/widgets/instruction_container.dart';
+import 'package:ShaderMod/pages/widgets/button_widget.dart';
+import 'package:ShaderMod/resources/app_colors.dart';
+import 'package:ShaderMod/resources/app_consts.dart';
+import 'package:ShaderMod/resources/app_images.dart';
+import 'package:ShaderMod/resources/app_texts.dart';
 
 class InstallPage extends StatelessWidget {
   static const routeName = '/install';

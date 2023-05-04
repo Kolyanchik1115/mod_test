@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mod_test/resources/app_colors.dart';
-import 'package:mod_test/resources/app_texts.dart';
+import 'package:ShaderMod/resources/app_colors.dart';
+import 'package:ShaderMod/resources/app_texts.dart';
 
 class IconContainer extends StatelessWidget {
   final SvgPicture svg;

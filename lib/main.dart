@@ -1,9 +1,9 @@
+import 'package:ShaderMod/services/flurry_analytic_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:mod_test/pages/splash/splash_page.dart';
-import 'package:mod_test/routes/app_routes.dart';
-import 'package:mod_test/services/flurry_analytic_service.dart';
+import 'package:ShaderMod/pages/splash/splash_page.dart';
+import 'package:ShaderMod/routes/app_routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mod_test/resources/app_colors.dart';
-import 'package:mod_test/resources/app_consts.dart';
-import 'package:mod_test/resources/app_texts.dart';
+import 'package:ShaderMod/resources/app_colors.dart';
+import 'package:ShaderMod/resources/app_consts.dart';
+import 'package:ShaderMod/resources/app_texts.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:mod_test/pages/widgets/button_widget.dart';
-import 'package:mod_test/services/admob_service.dart';
+import 'package:ShaderMod/pages/widgets/button_widget.dart';
+import 'package:ShaderMod/services/admob_service.dart';
 
 import 'package:open_file/open_file.dart';
 

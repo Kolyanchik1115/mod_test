@@ -1,11 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:mod_test/pages/widgets/button_widget.dart';
-import 'package:mod_test/resources/app_colors.dart';
-import 'package:mod_test/resources/app_consts.dart';
-import 'package:mod_test/resources/app_texts.dart';
+import 'package:ShaderMod/pages/widgets/button_widget.dart';
+import 'package:ShaderMod/resources/app_colors.dart';
+import 'package:ShaderMod/resources/app_consts.dart';
+import 'package:ShaderMod/resources/app_texts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SplashScreenContent extends StatefulWidget {
@@ -49,29 +50,26 @@ class _SplashScreenContentState extends State<SplashScreenContent> {
       children: [
         Column(
           children: [
-            const Text(
-              'Если вы согласны с ',
-              style: AppText.txt1,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () async {
-                    await launchUrlString(
-                      AppConstantsString.privacyPolicy,
-                      mode: LaunchMode.inAppWebView,
-                    );
-                  },
-                  child: Text(
-                    'Privacy Policy',
-                    style: AppText.txt1.copyWith(
-                      decoration: TextDecoration.underline,
-                    ),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: 'Если вы согласны с ',
+                style: AppText.txt3,
+                children: [
+                  TextSpan(
+                    text: 'Политикой конфиденциальности',
+                    style: AppText.txt6,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () async {
+                        await launchUrlString(
+                          AppConstantsString.privacyPolicy,
+                          mode: LaunchMode.inAppWebView,
+                        );
+                      },
                   ),
-                ),
-                const Text(' нажмите СТАРТ', style: AppText.txt1),
-              ],
+                  const TextSpan(text: '  нажмите СТАРТ', style: AppText.txt3),
+                ],
+              ),
             ),
           ],
         ),

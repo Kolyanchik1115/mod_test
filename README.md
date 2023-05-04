@@ -1,4 +1,4 @@
-# mod_test
+# ShaderMod
 
 A new Flutter project.
 

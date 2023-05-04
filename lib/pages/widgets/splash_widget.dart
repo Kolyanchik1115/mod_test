@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mod_test/resources/app_images.dart';
+import 'package:ShaderMod/resources/app_images.dart';
 
 class SplashLoading extends StatefulWidget {
   const SplashLoading({Key? key}) : super(key: key);
