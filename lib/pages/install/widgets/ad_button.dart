@@ -85,11 +85,10 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
 
   Future<void> _onClose() async {
     Navigator.of(context, rootNavigator: true).pop();
-
     if (_scaffoldMessage.isNotEmpty) {
       _showSnackBar();
     } else {
-      await OpenFile.open(_filePath);
+      await OpenFile.open(_filePath, type: AppConstantsString.minecraftPath);
     }
   }
 
