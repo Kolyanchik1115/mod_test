@@ -3,9 +3,9 @@ class AppConstantsString {
 
   static const String privacyPolicy =
       'https://www.iubenda.com/privacy-policy/48055999';
-  static const String fileUrl =
-      'https://www.dropbox.com/s/1kkgugesr6ijs5e/shader-addon.mcpack?dl=0';
-  static const String fileName = 'shader-addon.mcpack';
+  static const String assetFilePath =
+      'assets/mod/spider.mcaddon';
+  static const String fileName = 'spider.mcaddon';
   static const String minecraftPath = 'com.mojang.minecraftpe';
   static const String linkToPlayMarket =
       'market://details?id=com.mcpe_shader.mod_test';

@@ -2,14 +2,13 @@ import 'dart:async';
 import 'dart:io';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:ShaderMod/resources/app_colors.dart';
 import 'package:ShaderMod/resources/app_consts.dart';
 import 'package:ShaderMod/resources/app_texts.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ShaderMod/pages/widgets/button_widget.dart';
 import 'package:ShaderMod/services/admob_service.dart';
-
 import 'package:open_file/open_file.dart';
 
 class RewardedAdButton extends StatefulWidget {
@@ -43,7 +42,7 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
       isLoading: _isLoading,
       showAd: () => AdModService.showRewardedAd(
         onAdClosed: _onClose,
-        onGettingRewards: _onWatch,
+        onGettingRewards: () {},
         updateState: _setLoading,
       ),
     );
@@ -55,17 +54,11 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
   }
 
   Future<void> _onWatch() async {
+    _scaffoldMessage = '';
     bool isInstalled =
-        await DeviceApps.isAppInstalled(AppConstantsString.minecraftPath);
+    await DeviceApps.isAppInstalled(AppConstantsString.minecraftPath);
     if (isInstalled) {
-      final response = await http.get(Uri.parse(AppConstantsString.fileUrl));
-      final getAddonDirectory = await getExternalStorageDirectory();
-      final bytes = response.bodyBytes;
-
-      final file =
-          File('${getAddonDirectory!.path}/${AppConstantsString.fileName}');
-      final ready = await file.writeAsBytes(bytes);
-      _filePath = ready.path;
+      _getFile();
     } else {
       _scaffoldMessage = 'Minecraft не установлен на вашем телефоне';
     }
@@ -88,8 +81,20 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     if (_scaffoldMessage.isNotEmpty) {
       _showSnackBar();
     } else {
-      await OpenFile.open(_filePath, type: AppConstantsString.minecraftPath);
+      await OpenFile.open(_filePath,
+          type: AppConstantsString.minecraftPath);
     }
+  }
+
+  Future<void> _getFile() async {
+    final tempDir = await getExternalStorageDirectory();
+    final file = File('${tempDir!.path}/${AppConstantsString.fileName}');
+    final ifExist  =  await file.exists();
+    _filePath = file.path;
+    if (ifExist) return;
+    final ByteData assetData =
+    await rootBundle.load(AppConstantsString.assetFilePath);
+    await file.writeAsBytes(assetData.buffer.asUint8List(), flush: true);
   }
 
   @override
