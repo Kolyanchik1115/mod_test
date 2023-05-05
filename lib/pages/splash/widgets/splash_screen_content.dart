@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ShaderMod/services/snack_bar_service.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -40,11 +41,6 @@ class _SplashScreenContentState extends State<SplashScreenContent> {
 
   @override
   Widget build(BuildContext context) {
-    const snackBar = SnackBar(
-      content: Text('Отстутствует интернет подключение'),
-      backgroundColor: AppColors.error,
-    );
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -87,7 +83,11 @@ class _SplashScreenContentState extends State<SplashScreenContent> {
           width: 184,
           onPressed: () => check == true
               ? widget.onPressed()
-              : ScaffoldMessenger.of(context).showSnackBar(snackBar),
+              : SnackBarService.showSnackBar(
+                  error: true,
+                  context: context,
+                  message: 'Отстутствует интернет подключение',
+                ),
         ),
       ],
     );

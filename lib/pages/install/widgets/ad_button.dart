@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:ShaderMod/services/snack_bar_service.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:ShaderMod/resources/app_colors.dart';
@@ -64,22 +65,12 @@ class _RewardedAdButtonState extends State<RewardedAdButton> {
     }
   }
 
-  void _showSnackBar() {
-    final snackBar = SnackBar(
-      duration: const Duration(seconds: 3),
-      backgroundColor: AppColors.icon,
-      content: Text(
-        _scaffoldMessage,
-        style: AppText.txt1,
-      ),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+
 
   Future<void> _onClose() async {
     Navigator.of(context, rootNavigator: true).pop();
     if (_scaffoldMessage.isNotEmpty) {
-      _showSnackBar();
+      SnackBarService.showSnackBar(context: context, message: _scaffoldMessage);
     } else {
       await OpenFile.open(_filePath,
           type: AppConstantsString.minecraftPath);
