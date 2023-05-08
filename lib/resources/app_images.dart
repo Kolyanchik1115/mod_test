@@ -30,7 +30,7 @@ class AppImages {
   static const String i11 = '$_path1/11.png';
 
   static const String splashImage = '$_path2/splash_image_blue.png';
-  static const String splashLoading = '$_path2/splash_loading_blue.png';
+  static const String splashLoading = '$_path2/splash_loading_red.png';
   static const String allWorlds = '$_path2/all_worlds.png';
 
   static const List images1 = [
