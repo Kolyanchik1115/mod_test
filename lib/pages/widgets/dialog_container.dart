@@ -23,7 +23,7 @@ class DialogContainer extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [AppColors.dialogGradientStart, AppColors.dialogGradientEnd],
         ),
-        shadowColor: const Color.fromRGBO(205, 155, 255, 1),
+        shadowColor: AppColors.dialogShadow,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
