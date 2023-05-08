@@ -1,3 +1,4 @@
+import 'package:ShaderMod/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:ShaderMod/pages/home/home_page.dart';
 import 'package:ShaderMod/pages/splash/widgets/splash_screen_content.dart';
@@ -57,8 +58,8 @@ class _SplashPageState extends State<SplashPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromRGBO(189, 0, 255, 1),
-              Color.fromRGBO(71, 0, 162, 1)
+              AppColors.splashGradientStart,
+              AppColors.splashGradientEnd,
             ],
           ),
         ),

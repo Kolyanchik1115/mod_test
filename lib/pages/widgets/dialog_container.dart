@@ -1,3 +1,4 @@
+import 'package:ShaderMod/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ShaderMod/pages/widgets/shadow_container.dart';
@@ -20,7 +21,7 @@ class DialogContainer extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Colors.white, Color.fromRGBO(224, 214, 255, 1)],
+          colors: [AppColors.dialogGradientStart, AppColors.dialogGradientEnd],
         ),
         shadowColor: const Color.fromRGBO(205, 155, 255, 1),
         child: Padding(
